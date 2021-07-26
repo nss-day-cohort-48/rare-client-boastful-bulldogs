@@ -1,0 +1,10 @@
+.registration {
+    border: 1px dotted lightseagreen;
+    padding: 1rem;
+}
+
+.registration__game {
+    font-family: "Patua One";
+    font-weight: bold;
+    letter-spacing: 0.15rem;
+}
