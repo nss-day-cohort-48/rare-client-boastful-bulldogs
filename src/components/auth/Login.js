@@ -19,7 +19,7 @@ export const Login = () => {
                 "Accept": "application/json"
             },
             body: JSON.stringify({
-                username: email.current.value,
+                email: email.current.value,
                 password: password.current.value
             })
         })
