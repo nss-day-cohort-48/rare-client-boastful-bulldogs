@@ -6,7 +6,7 @@ import "./Post.css"
 export const MyPostList = () => {
     const { posts, getPostsByUserId } = useContext(PostContext)
     const userId = parseInt(localStorage.getItem("rare_user_id"))
-
+    
     useEffect(() => {
         getPostsByUserId(userId)
     }, [])
@@ -15,11 +15,12 @@ export const MyPostList = () => {
         return b.publication_date - a.publication_date
     })
 
+    
     return (
         <>
             <h1>My Posts</h1>
             {
-                posts.map(post => {
+                sortedPosts.map(post => {
                     return (
                         <>
                         <div>Title: {post.title}</div>
