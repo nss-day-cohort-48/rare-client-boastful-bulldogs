@@ -1,10 +1,11 @@
 import React, { useEffect, useContext } from "react"
 import { PostContext } from "./PostProvider"
+import { Link, useHistory } from "react-router-dom"
 import "./Post.css"
 
 
 export const PostList = () => {
-    const { posts, getAllPosts } = useContext(PostContext)
+    const { posts, getAllPosts, getPostById } = useContext(PostContext)
 
     useEffect(() => {
         getAllPosts()
@@ -14,6 +15,10 @@ export const PostList = () => {
         return b.publication_date - a.publication_date
     })
 
+    const handlePostClick = (id) => {
+        getPostById(id)
+        .then(() => history.push(`/posts/${id}`))
+      }
 
     return (
         <>
@@ -23,7 +28,7 @@ export const PostList = () => {
                 sortedPosts.map(post => {
                     return (
                         <>
-                        <div>Title: {post.title}</div>
+                        <div>Title: <Link className="title_link" onCLick={handlePostClick(post.id)}>{post.title}</Link></div>
                         <div>Author: {post.user.first_name} {post.user.last_name}</div>
                         <div>Category: {post.category.label}</div>
                         </>
