@@ -7,6 +7,8 @@ import "./Post.css"
 export const PostList = () => {
     const { posts, getAllPosts, getPostById } = useContext(PostContext)
 
+    const history = useHistory()
+
     useEffect(() => {
         getAllPosts()
     }, [])
@@ -28,7 +30,7 @@ export const PostList = () => {
                 sortedPosts.map(post => {
                     return (
                         <>
-                        <div>Title: <Link className="title_link" onCLick={handlePostClick(post.id)}>{post.title}</Link></div>
+                        <div>Title: <Link className="title_link" onClick={() => {handlePostClick(post.id)}}>{post.title}</Link></div>
                         <div>Author: {post.user.first_name} {post.user.last_name}</div>
                         <div>Category: {post.category.label}</div>
                         </>

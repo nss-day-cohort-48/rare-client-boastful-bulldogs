@@ -20,7 +20,7 @@ export const ApplicationViews = () => {
                     <PostList/>
                 </Route>
                 
-                <Route exact path="/posts/:psotId(\d+)">
+                <Route exact path="/posts/:postId(\d+)">
                     <Post/>
                 </Route>
 
