@@ -11,7 +11,7 @@ export const TagsProvider = (props) => {
       .then((data) => setPosts(data)); // updates state with tags from server
   };
 
-  const get_single_tag = (tag_id) => {
+  const getTagById = (tag_id) => {
     return fetch(`http://localhost:8088/tags/${tag_id}`).then((res) =>
       res.json()
     );
@@ -22,7 +22,7 @@ export const TagsProvider = (props) => {
       value={{
         tags,
         getAllTags,
-        get_single_tag,
+        getTagById,
       }}
     >
       {props.children}
