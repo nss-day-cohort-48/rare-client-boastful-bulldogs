@@ -5,7 +5,7 @@ import { PostList } from "./posts/PostList";
 import { Post } from "./posts/Post";
 import { MyPostList } from "./posts/MyPostList";
 import { TagsProvider } from "./tags/TagsProvider";
-import { TagList } from "./tags/TagLists";
+import { TagsList } from "./tags/TagsList";
 
 export const ApplicationViews = () => {
   return (
@@ -35,7 +35,7 @@ export const ApplicationViews = () => {
       {/* Tag Manager */}
       <TagsProvider>
         <Route exact path="/tags">
-          <TagList />
+          <TagsList />
         </Route>
       </TagsProvider>
     </>
