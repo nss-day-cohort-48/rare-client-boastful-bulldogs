@@ -9,10 +9,15 @@ export const NavBar = () => {
     return (
         <ul className="navbar">
             <li className="navbar__item">
-                <img className="navbar__logo" src={Logo} />
+                <Link className="navbar__logo" to="/">
+                    <img className="navbar__logo" src={Logo} />
+                </Link>
             </li>
             <li className="navbar__item">
-                <Link className="navbar__link" to="/">Posts</Link>
+                <Link className="navbar__link" to="/posts">All Posts</Link>
+            </li>
+            <li className="navbar__item">
+                <Link className="navbar__link" to="/myposts">My Posts</Link>
             </li>
             {
                 (localStorage.getItem("rare_user_id") !== null) ?
