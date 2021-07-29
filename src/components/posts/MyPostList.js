@@ -24,16 +24,17 @@ export const MyPostList = () => {
         .then(() => history.push(`/posts/${id}`))
       }
 
-    const handleDeleteWarning = (e) => {
-        e.preventDefault()
-        deleteWarning.current.showModal()
-        return
-    }
+    // const handleDeleteWarning = (e) => {
+    //     e.preventDefault()
+    //     deleteWarning.current.showModal()
+    //     return
+    // }
 
     
     return (
         <>
             <h1 className="post-title">My Posts</h1>
+
             {
                 sortedPosts.map(post => {
                     return (
@@ -48,13 +49,12 @@ export const MyPostList = () => {
                         <div className="post-list">
                             {userId === post.user_id 
                             ?
-                            
                             <div className="post-buttons">
                                 <button className="post-button">Edit</button>
-                                <button onClick={handleDeleteWarning}>Delete</button>
+                                <button onClick={() => {deleteWarning.current.showModal()}}>Delete</button>
                             </div>
                             : 
-                            <></>
+                            <><div className="post-buttons"></div></>
                             }
                             <div>
                                 <div>Title: <Link className="title_link" onClick={() => {handlePostClick(post.id)}}>{post.title}</Link></div>
@@ -66,7 +66,6 @@ export const MyPostList = () => {
                     )
                 })
             }
-
         </>
     )
 }
