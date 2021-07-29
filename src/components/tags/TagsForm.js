@@ -54,6 +54,7 @@ export const TagsForm = () => {
                 event.preventDefault();
                 handleSaveTag();
                 setTag({});
+                onClick();
               }}
             >
               Save Tag
