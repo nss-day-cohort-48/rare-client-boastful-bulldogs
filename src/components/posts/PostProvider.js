@@ -34,10 +34,11 @@ export const PostProvider = (props) => {
         return fetch(`http://localhost:8088/myposts/${postId}`, {
             method: "DELETE"
         })
-        .then(getAllPosts)
+        .then(getPostsByUserId)
     }
+
     const addPost = (postObj) => {
-        // debugger
+        
         return fetch(`http://localhost:8088/posts`, {
           method: "POST",
           headers: {

@@ -11,6 +11,9 @@ export const MyPostList = () => {
     const history = useHistory()
     const deleteWarning = useRef()
     
+    useEffect(() => {
+        getPostsByUserId(userId)
+    }, [])
     
     const sortedPosts = posts.sort((a, b) => {
         return b.publication_date - a.publication_date
@@ -28,9 +31,6 @@ export const MyPostList = () => {
         }
     }
     
-    useEffect(() => {
-        getPostsByUserId(userId)
-    }, [])
     
     return (
         <>
