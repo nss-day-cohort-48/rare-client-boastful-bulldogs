@@ -8,6 +8,7 @@ import { CategoriesList } from "./category/CategoryList";
 import { CategoryProvider } from "./category/CategoryProvider";
 import { TagsProvider } from "./tags/TagsProvider";
 import { TagsList } from "./tags/TagsList";
+import { CategoryForm } from "./category/CategoryForm";
 
 export const ApplicationViews = () => {
   return (
@@ -37,6 +38,9 @@ export const ApplicationViews = () => {
       <CategoryProvider>
         <Route exact path="/categories">
           <CategoriesList />
+        </Route>
+        <Route exact path="/categories/create">
+          <CategoryForm />
         </Route>
       </CategoryProvider>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { CategoryContext } from "./CategoryProvider";
+import { Link } from "react-router-dom";
 import "./Category.css";
 
 export const CategoriesList = () => {
@@ -16,11 +17,13 @@ return (
     {categories.map((category) => {
         return (
         <>
-            <div>ID: {category.id}</div>
-            <div>Label: {category.label}</div>
+            <div>{category.label}</div>
         </>
         );
     })}
+
+    <Link to="/categories/create"><button> Create New Category</button></Link>
+
     </>
 );
 };

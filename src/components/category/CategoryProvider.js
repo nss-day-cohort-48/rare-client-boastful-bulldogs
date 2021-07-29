@@ -12,10 +12,21 @@ const getAllCategories = () => {
 };
 
 const getCategoryById = (category_id) => {
-    return fetch(`http://localhost:8088/tags/${category_id}`).then((res) =>
+    return fetch(`http://localhost:8088/categories/${category_id}`).then((res) =>
     res.json()
     );
 };
+
+const createCategory = (newCategoryObj) => {
+    return fetch (`http://localhost:8088/categories`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }, 
+        body: JSON.stringify(newCategoryObj)
+    })
+        .then(getAllCategories)
+}
 
     return (
         <CategoryContext.Provider
@@ -23,6 +34,7 @@ const getCategoryById = (category_id) => {
             categories,
             getAllCategories,
             getCategoryById,
+            createCategory,
         }}
         >
         {props.children}
