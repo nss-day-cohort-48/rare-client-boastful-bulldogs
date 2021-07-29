@@ -1,71 +1,74 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { TagsContext } from "./TagsProvider";
+import { useHistory } from "react-router-dom";
 
-export const EntryForm = (props) => {
-  const { addTag, getTags, tag, setTag } = useContext(TagsContext);
+export const TagsForm = () => {
+  const { addTag, getAllTags } = useContext(TagsContext);
   const history = useHistory();
+  const [tag, setTag] = useState({});
+  const [showNewTagField, setNewTagField] = useState(false);
+  const onClick = () => setNewTagField(!showNewTagField);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    getTags();
-  }, []);
-
-  const [tagObj, setTagObj] = useState({
-    label: "",
-  });
-
   const handleControlledInputChange = (event) => {
-    const new_tag = Object.assign({}, tag);
-    new_tag[event.target.name] = event.target.value;
-    setTag(new_tag);
-  };
-
-  const constructNewTag = () => {
-    addTag({
-      label: tag.label,
-    });
-    setTag({ label: "" });
+    const newTag = { ...tag };
+    newTag[event.target.id] = event.target.value;
+    setTag(newTag);
   };
 
   const handleSaveTag = () => {
-    //disable the button - no extra clicks
     setIsLoading(true);
-    addTag(tagObj)
-      .then(getTags)
-      // .then(() => history.push("/upcoming"));
+    addTag({
+      label: tag.label,
+    })
+      .then(getAllTags)
       .then(() => history.push("/tags"));
   };
 
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
-    <form className="EntryForm">
-      <h2 className="EntryForm__title">Create Tag</h2>
-      <fieldset>
-        <div className="form-group">
-          <label htmlFor="label">Label: </label>
-          <input
-            type="text"
-            name="label"
-            required
-            autoFocus
-            className="form-control"
-            proptype="varchar"
-            placeholder="label"
-            value={tag.label}
-            onChange={handleControlledInputChange}
-          />
-        </div>
-      </fieldset>
-      <button
-        type="submit"
-        onClick={(evt) => {
-          evt.preventDefault();
-          constructNewTag();
-        }}
-        className="btn btn-primary"
-      >
-        Save Tag
-      </button>
-    </form>
+    <>
+      {showNewTagField ? (
+        <form>
+          <fieldset>
+            <div>
+              <input
+                type="text"
+                id="label"
+                name="label"
+                required
+                autoFocus
+                placeholder="add text"
+                onChange={handleControlledInputChange}
+              />
+            </div>
+          </fieldset>
+          <div>
+            <button
+              disabled={isLoading}
+              onClick={(event) => {
+                event.preventDefault();
+                handleSaveTag();
+                setTag({});
+              }}
+            >
+              Create Tag
+            </button>
+          </div>
+        </form>
+      ) : (
+        <button
+          className="button create_tag_button"
+          onClick={() => {
+            onClick();
+          }}
+        >
+          Create Tag
+        </button>
+      )}
+    </>
   );
 };

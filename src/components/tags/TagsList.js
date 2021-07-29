@@ -1,9 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { TagsContext } from "./TagsProvider";
 import "./Tags.css";
+import { TagsForm } from "./TagsForm";
 
 export const TagsList = () => {
   const { tags, getAllTags } = useContext(TagsContext);
+
 
   useEffect(() => {
     getAllTags();
@@ -17,6 +19,9 @@ export const TagsList = () => {
     <>
       <h1>All Tags</h1>
 
+      {/* BUTTON GOES HERE */}
+      <TagsForm />
+      {/* BUTTON ENDS HERE */}
       {sortedTags.map((tag) => {
         return (
           <>
