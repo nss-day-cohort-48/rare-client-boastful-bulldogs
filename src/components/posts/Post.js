@@ -17,11 +17,20 @@ export const Post = () => {
         .then((data) => setPostDetail(data))
   }, [])
 
+//   const date = postDetail.publication_date.toLocaleDateString("en-US",
+//   {
+//       weekday: 'long',
+//       year: 'numeric',
+//       month: 'long',
+//       day: 'numeric',
+//       timeZone: 'America/Chicago'
+//   })
+
   return (
     
         <section className="postDetail__container">
             <div>Title: {postDetail.title}</div>
-            <img src={postDetail.image_url} />
+            <img src={postDetail.image_url} alt="header" />
             <div>{postDetail.content}</div>
             <div>Author: {postDetail.user?.first_name} {postDetail.user?.last_name}</div>
             <div>Date: {postDetail.publication_date}</div>
@@ -29,5 +38,6 @@ export const Post = () => {
         </section>
       
       
+    //   <div>Date: <HumanDate date={postDetail.publication_date}/></div>
       )
 }
