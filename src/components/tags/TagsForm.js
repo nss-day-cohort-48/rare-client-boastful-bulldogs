@@ -60,14 +60,24 @@ export const TagsForm = () => {
           </div>
         </form>
       ) : (
-        <button
-          className="button create_tag_button"
-          onClick={() => {
-            onClick();
-          }}
-        >
-          Create Tag
-        </button>
+        <>
+          <button
+            className="button create_tag_button"
+            onClick={() => {
+              onClick();
+            }}
+          >
+            Create Tag
+          </button>
+          <button
+            className="button cancel__button"
+            onClick={() => {
+              onClick();
+            }}
+          >
+            {showNewTagField ? <>Back</> : <>Change</>}
+          </button>
+        </>
       )}
     </>
   );
