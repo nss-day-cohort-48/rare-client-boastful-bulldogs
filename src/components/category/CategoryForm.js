@@ -38,7 +38,7 @@ export const CategoryForm = () => {
                     e.preventDefault()
                     handleSaveCategory()
                     setCategory("")
-                }}>Submit New Category</button>
+                }}>Save</button>
             </div>
         </form>
     )

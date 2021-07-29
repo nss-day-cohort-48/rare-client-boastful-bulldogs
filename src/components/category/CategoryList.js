@@ -22,7 +22,7 @@ return (
         );
     })}
 
-    <Link to="/categories/create"><button> Create New Category</button></Link>
+    <Link to="/categories/create"><button> Create Category</button></Link>
 
     </>
 );
