@@ -1,0 +1,22 @@
+.post-title {
+    margin-left: 12rem;
+}
+
+.post-list {
+    display: flex;
+    margin-left: 3rem;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.post-buttons {
+    flex-basis: 10%;
+}
+
+.post-button {
+    margin: .5rem;
+}
+
+.post-detail {
+    margin-right: 1rem;
+}

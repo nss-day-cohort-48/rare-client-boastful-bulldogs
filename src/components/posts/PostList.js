@@ -6,6 +6,7 @@ import "./Post.css"
 
 export const PostList = () => {
     const { posts, getAllPosts, getPostById } = useContext(PostContext)
+    const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
 
@@ -24,15 +25,28 @@ export const PostList = () => {
 
     return (
         <>
-            <h1>All Posts</h1>
+            <h1 className="post-title">All Posts</h1>
 
             {
                 sortedPosts.map(post => {
                     return (
                         <>
-                        <div>Title: <Link className="title_link" onClick={() => {handlePostClick(post.id)}}>{post.title}</Link></div>
-                        <div>Author: {post.user.first_name} {post.user.last_name}</div>
-                        <div>Category: {post.category.label}</div>
+                        <div className="post-list">
+                            {userId === post.user_id 
+                            ?
+                            <div className="post-buttons">
+                                <button className="post-button">Edit</button>
+                                <button>Delete</button>
+                            </div>
+                            : 
+                            <><div className="post-buttons"></div></>
+                            }
+                            <div>
+                                <div>Title: <Link className="title_link" onClick={() => {handlePostClick(post.id)}}>{post.title}</Link></div>
+                                <div>Author: {post.user.first_name} {post.user.last_name}</div>
+                                <div>Category: {post.category.label}</div>
+                            </div>
+                        </div>
                         </>
                     )
                 })
