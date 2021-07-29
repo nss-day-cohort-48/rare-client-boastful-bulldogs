@@ -4,6 +4,8 @@ import { PostProvider } from "./posts/PostProvider";
 import { PostList } from "./posts/PostList";
 import { Post } from "./posts/Post";
 import { MyPostList } from "./posts/MyPostList";
+import { CategoriesList } from "./category/CategoryList";
+import { CategoryProvider } from "./category/CategoryProvider";
 import { TagsProvider } from "./tags/TagsProvider";
 import { TagsList } from "./tags/TagsList";
 
@@ -31,6 +33,12 @@ export const ApplicationViews = () => {
           <MyPostList />
         </Route>
       </PostProvider>
+
+      <CategoryProvider>
+        <Route exact path="/categories">
+          <CategoriesList />
+        </Route>
+      </CategoryProvider>
 
       {/* Tag Manager */}
       <TagsProvider>
