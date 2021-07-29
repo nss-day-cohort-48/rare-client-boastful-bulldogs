@@ -33,6 +33,9 @@ export const NavBar = () => {
                 <Link className="navbar__link" onClick={() => {history.push("/login")}}>Tag manager</Link>
                 }
             </li>
+            <li className="navbar__item">
+                <Link className="navbar__link" to="/newpost">New Post</Link>
+            </li>
             {
                 (localStorage.getItem("rare_user_id") !== null) ?
                     <li className="nav-item">
