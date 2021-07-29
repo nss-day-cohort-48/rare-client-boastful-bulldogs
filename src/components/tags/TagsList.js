@@ -9,11 +9,15 @@ export const TagsList = () => {
     getAllTags();
   }, []);
 
+  const sortedTags = tags.sort((a, b) => {
+    return a.label - b.label;
+  });
+
   return (
     <>
       <h1>All Tags</h1>
 
-      {tags.map((tag) => {
+      {sortedTags.map((tag) => {
         return (
           <>
             <div>ID: {tag.id}</div>
