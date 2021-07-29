@@ -5,31 +5,32 @@ import "./Post.css"
 
 
 export const MyPostList = () => {
-    const { posts, getPostsByUserId, getPostById } = useContext(PostContext)
+    const { posts, getPostsByUserId, getPostById, deleteMyPost } = useContext(PostContext)
     const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
     const deleteWarning = useRef()
     
-    useEffect(() => {
-        getPostsByUserId(userId)
-    }, [])
-
+    
     const sortedPosts = posts.sort((a, b) => {
         return b.publication_date - a.publication_date
     })
-
+    
     const handlePostClick = (id) => {
         getPostById(id)
         .then(() => history.push(`/posts/${id}`))
-      }
-
-    // const handleDeleteWarning = (e) => {
-    //     e.preventDefault()
-    //     deleteWarning.current.showModal()
-    //     return
-    // }
-
+    }
+    
+    const handleDeleteWarning = () => {
+        if (deleteWarning !== "") {
+            deleteWarning.current.showModal()
+            return
+        }
+    }
+    
+    useEffect(() => {
+        getPostsByUserId(userId)
+    }, [])
     
     return (
         <>
@@ -43,7 +44,7 @@ export const MyPostList = () => {
                             <div>Are you sure you want to delete this post?</div>
                             <div className="modal-buttons">
                                 <button className="button--close" onClick={e => deleteWarning.current.close()}>Close</button>
-                                <button className="button--close" onClick={e => deleteWarning.current.close()}>Delete Post</button>
+                                <button className="button--close" onClick={() => {deleteMyPost(post.id)}}>Delete Post</button>
                             </div>
                         </dialog>
                         <div className="post-list">
@@ -51,7 +52,7 @@ export const MyPostList = () => {
                             ?
                             <div className="post-buttons">
                                 <button className="post-button">Edit</button>
-                                <button onClick={() => {deleteWarning.current.showModal()}}>Delete</button>
+                                <button onClick={handleDeleteWarning}>Delete</button>
                             </div>
                             : 
                             <><div className="post-buttons"></div></>

@@ -5,7 +5,7 @@ import "./Post.css"
 
 
 export const PostList = () => {
-    const { posts, getAllPosts, getPostById } = useContext(PostContext)
+    const { posts, getAllPosts, getPostById, deletePost } = useContext(PostContext)
     const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
@@ -30,7 +30,7 @@ export const PostList = () => {
         deleteWarning.current.showModal()
         return
     }
-
+    
     return (
         <>
             <h1 className="post-title">All Posts</h1>
@@ -43,7 +43,7 @@ export const PostList = () => {
                             <div>Are you sure you want to delete this post?</div>
                             <div className="modal-buttons">
                                 <button className="button--close" onClick={e => deleteWarning.current.close()}>Close</button>
-                                <button className="button--close" onClick={e => deleteWarning.current.close()}>Delete Post</button>
+                                <button className="button--close" onClick={() => {deletePost(post.id)}}>Delete Post</button>
                             </div>
                         </dialog>
                         <div className="post-list">
