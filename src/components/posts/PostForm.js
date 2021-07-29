@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom"
 import { PostContext } from "./PostProvider"
 import { Button, Input, Select, MenuItem, InputLabel } from "@material-ui/core"
 import { FormControlLabel, Radio } from "@material-ui/core"
-// import "../user/User.css"
+import { DateTime } from "luxon";
 
 export const PostForm = () => {
 //   const { updateUser, getUserById } = useContext(UserContext)
@@ -15,6 +15,8 @@ export const PostForm = () => {
   const userId = localStorage.getItem("rare_user_id")
   const history = useHistory()
   const [user, setUser] = useState({})
+  const now = DateTime.now()
+
   const [post, setPost] = useState({
     user_id: userId,
     category_id: 1,
@@ -64,10 +66,10 @@ export const PostForm = () => {
     setIsLoading(true)
     // debugger
     let newPost = {
-        user_id: userId,
+        user_id: parseInt(userId),
         category_id: 1,
         title: post.title,
-        publication_date: 0,
+        publication_date: now.toISODate(),
         image_url: post.image_url,
         content: post.content,
         approved: 0
