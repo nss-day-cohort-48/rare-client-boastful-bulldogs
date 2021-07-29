@@ -23,12 +23,23 @@ export const PostProvider = (props) => {
         .then(setPosts)
     }
 
+    const addPost = (postObj) => {
+        // debugger
+        return fetch(`http://localhost:8088/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(postObj)
+        })
+      }
+
 
     return (
         <PostContext.Provider value= {
             {
                 posts, getAllPosts, getPostById,
-                getPostsByUserId
+                getPostsByUserId, addPost
             }
         }>
             {props.children}
