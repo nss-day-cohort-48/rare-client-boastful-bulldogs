@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { TagsContext } from "./TagsProvider";
 import "./Tags.css";
 import { TagsForm } from "./TagsForm";
@@ -6,10 +6,9 @@ import { TagsForm } from "./TagsForm";
 export const TagsList = () => {
   const { tags, getAllTags } = useContext(TagsContext);
 
-
   useEffect(() => {
     getAllTags();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sortedTags = tags.sort((a, b) => {
     return a.label - b.label;
@@ -18,10 +17,9 @@ export const TagsList = () => {
   return (
     <>
       <h1>All Tags</h1>
-
-      {/* BUTTON GOES HERE */}
+      <br></br>
       <TagsForm />
-      {/* BUTTON ENDS HERE */}
+      <br></br>
       {sortedTags.map((tag) => {
         return (
           <>

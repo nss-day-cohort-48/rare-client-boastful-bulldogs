@@ -3,7 +3,7 @@ import { TagsContext } from "./TagsProvider";
 import { useHistory } from "react-router-dom";
 
 export const TagsForm = () => {
-  const { addTag, getAllTags } = useContext(TagsContext);
+  const { addTag } = useContext(TagsContext);
   const history = useHistory();
   const [tag, setTag] = useState({});
   const [showNewTagField, setNewTagField] = useState(false);
@@ -20,9 +20,7 @@ export const TagsForm = () => {
     setIsLoading(true);
     addTag({
       label: tag.label,
-    })
-      .then(getAllTags)
-      .then(() => history.push("/tags"));
+    }).then(() => history.push("/tags"));
   };
 
   useEffect(() => {
@@ -33,20 +31,23 @@ export const TagsForm = () => {
     <>
       {showNewTagField ? (
         <form>
+          <h3>Create a New Tag</h3>
           <fieldset>
-            <div>
+            <div className="button_container">
               <input
                 type="text"
                 id="label"
                 name="label"
                 required
                 autoFocus
-                placeholder="add text"
+                placeholder="New Tag Label"
                 onChange={handleControlledInputChange}
               />
             </div>
           </fieldset>
+          {/* BUTTONS */}
           <div>
+            {/* SAVE BUTTON */}
             <button
               disabled={isLoading}
               onClick={(event) => {
@@ -55,28 +56,30 @@ export const TagsForm = () => {
                 setTag({});
               }}
             >
-              Create Tag
+              Save Tag
+            </button>
+            {/* CANCEL BUTTON */}
+            <button
+              className="button cancel_button"
+              onClick={() => {
+                onClick();
+              }}
+            >
+              Cancel
             </button>
           </div>
         </form>
       ) : (
         <>
           <button
-            className="button create_tag_button"
+            className="button cancel_button"
             onClick={() => {
               onClick();
             }}
           >
-            Create Tag
+            Create a New Tag
           </button>
-          <button
-            className="button cancel__button"
-            onClick={() => {
-              onClick();
-            }}
-          >
-            {showNewTagField ? <>Back</> : <>Change</>}
-          </button>
+          <br></br>
         </>
       )}
     </>

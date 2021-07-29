@@ -31,6 +31,7 @@ export const TagsProvider = (props) => {
   return (
     <TagsContext.Provider
       value={{
+        tag,
         tags,
         getAllTags,
         getTagById,
