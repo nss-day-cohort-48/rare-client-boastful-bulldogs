@@ -26,7 +26,7 @@ export const PostEdit = () => {
     user_id: parseInt(userId),
     category_id: 1,
     title: "",
-    publication_date: post.publication_date,
+    publication_date: "",
     image_url: "",
     content: "",
     approved: 0
@@ -80,7 +80,7 @@ export const PostEdit = () => {
     let newPost = {
         id: parseInt(postId,),
         user_id: parseInt(userId),
-        category_id: 1,
+        category_id: post.category_id,
         title: post.title,
         publication_date: post.publication_date,
         image_url: post.image_url,
@@ -119,7 +119,7 @@ export const PostEdit = () => {
           <div className="form-group post-category-field">
             <InputLabel htmlFor="category">Categories:</InputLabel>
             <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category_id} onChange={handleControlledCategoryChange}>
-              <option value="0">Select</option>
+              <option value="">Select</option>
                 {categories.map(c => (
                 <MenuItem key={c.id} value={c.id}>
                   {c.label}

@@ -111,7 +111,7 @@ export const PostForm = () => {
           <div className="form-group post-category-field">
             <InputLabel htmlFor="category">Categories:</InputLabel>
             <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category_id} onChange={handleControlledCategoryChange}>
-              <option value="0">Select</option>
+              <MenuItem value="0">Select</MenuItem>
                 {categories.map(c => (
                 <MenuItem key={c.id} value={c.id}>
                   {c.label}
