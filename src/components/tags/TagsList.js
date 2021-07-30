@@ -2,9 +2,11 @@ import React, { useEffect, useContext } from "react";
 import { TagsContext } from "./TagsProvider";
 import "./Tags.css";
 import { TagsForm } from "./TagsForm";
+import { useHistory } from "react-router-dom";
 
 export const TagsList = () => {
-  const { tags, getAllTags } = useContext(TagsContext);
+  const { tag, tags, getAllTags, deleteTag } = useContext(TagsContext);
+  const history = useHistory();
 
   useEffect(() => {
     getAllTags();
@@ -13,6 +15,10 @@ export const TagsList = () => {
   const sortedTags = [...tags].sort((a, b) => {
     return a.label.localeCompare(b.label);
   });
+
+  const handleDelete = (tagId) => {
+    deleteTag(tagId).then(history.push("/tags"));
+  };
 
   return (
     <>
@@ -25,7 +31,7 @@ export const TagsList = () => {
           <>
             <div>ID: {tag.id}</div>
             <div>Label: {tag.label}</div>
-            <button>Delete Tag</button>
+            <button onClick={handleDelete}>Delete Tag</button>
           </>
         );
       })}
