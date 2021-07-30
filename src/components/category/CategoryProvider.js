@@ -25,7 +25,6 @@ const createCategory = (newCategoryObj) => {
         }, 
         body: JSON.stringify(newCategoryObj)
     })
-        .then(getAllCategories)
 }
 
     return (
