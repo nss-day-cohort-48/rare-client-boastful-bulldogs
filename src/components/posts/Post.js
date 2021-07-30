@@ -2,10 +2,11 @@ import React from "react"
 import { useContext, useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router-dom"
 import { PostContext } from "./PostProvider"
-import { HumanDate } from "../utils/HumanDate"
+import { CommentContext } from "../comments/CommentProvider"
 
 export const Post = () => {
   const { getPostById } = useContext(PostContext)
+  const { comments, getCommentsByPostId } = useContext(CommentContext)
  
   const history = useHistory()
   const { postId } = useParams()
@@ -15,6 +16,7 @@ export const Post = () => {
   useEffect(() => {
     getPostById(parseInt(postId))
         .then((data) => setPostDetail(data))
+    getCommentsByPostId(parseInt(postId))
   }, [])
 
 //   const date = postDetail.publication_date.toLocaleDateString("en-US",
@@ -25,16 +27,34 @@ export const Post = () => {
 //       day: 'numeric',
 //       timeZone: 'America/Chicago'
 //   })
-
+  
   return (
     
         <section className="postDetail__container">
-            <div>Title: {postDetail.title}</div>
+            <h2>Title: {postDetail.title}</h2>
             <img src={postDetail.image_url} alt="header" />
             <div>{postDetail.content}</div>
             <div>Author: {postDetail.user?.first_name} {postDetail.user?.last_name}</div>
             <div>Date: {postDetail.publication_date}</div>
             <div>Category: {postDetail.category?.label}</div>
+
+            <h3>Comments</h3>
+            {
+              comments.map(comment => {
+                return (
+                  <>
+                  <div>{comment.user.first_name}</div>
+                  <div>{comment.content}</div>
+                  <br></br>
+                  </>
+                )
+              })
+            }
+
+            <button onClick={() => {
+              history.push(`/posts/comments/${postId}`)
+            }}>Add Comment</button>
+
         </section>
       
       
