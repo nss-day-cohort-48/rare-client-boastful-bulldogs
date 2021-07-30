@@ -5,14 +5,16 @@ import { useHistory, useParams } from "react-router-dom"
 // import { UserContext } from "../user/UserProvider"
 import { PostContext } from "./PostProvider"
 import { CategoryContext } from "../category/CategoryProvider"
+import { TagsContext } from "../tags/TagsProvider"
 import { Button, Input, Select, MenuItem, InputLabel } from "@material-ui/core"
-import { FormControlLabel, Radio } from "@material-ui/core"
+import { FormControlLabel, Checkbox } from "@material-ui/core"
 import { DateTime } from "luxon";
 
 export const PostEdit = () => {
 //   const { updateUser, getUserById } = useContext(UserContext)
   const { updatePost, getPostById } = useContext(PostContext)
   const { categories, getAllCategories } = useContext(CategoryContext)
+  const { tags, getAllTags } = useContext(TagsContext)
   const [ isLoading, setIsLoading ] = useState(true)
   const userId = localStorage.getItem("rare_user_id")
   const history = useHistory()
@@ -29,7 +31,8 @@ export const PostEdit = () => {
     publication_date: "",
     image_url: "",
     content: "",
-    approved: 0
+    approved: 0,
+    tag_id: 0
   })
 
   const [pic, setPic] =useState({
@@ -68,11 +71,11 @@ export const PostEdit = () => {
 //     console.log(newPic.file[0])
 //     setPic(newPic)
 //   }
-//   const handleControlledRadioChange = e => {
-//     const newHouse = { ...house }
-//     newHouse.userTypeId = e.target.value
-//     setHouse(newHouse)
-//   }
+  const handleControlledCheckChange = e => {
+    const newPost = { ...post }
+    newPost.tagId = e.target.value
+    setPost(newPost)
+  }
 
   const handleAdd = (e) => {
     setIsLoading(true)
@@ -134,12 +137,12 @@ export const PostEdit = () => {
             <Input  margin="dense"type="text" id="image_url" className="SearchForm-control" placeholder="image URL" value={post.image_url} onChange={handleControlledInputChange} />
           </div>
         </fieldset>
-      {/* <fieldset  className="postInputField">
-        <div className="radios">
-                <FormControlLabel className="radio" id="userTypeId"  value="1" checked={parseInt(house.userTypeId) === 1 ? true : false} control={<Radio />} label="For Rent" onChange={handleControlledRadioChange} />
-                <FormControlLabel className="radio" id="userTypeId"  value="2" checked={parseInt(house.userTypeId) === 2 ? true : false } control={<Radio />} label="For Sale" onChange={handleControlledRadioChange} />
-                </div>
-      </fieldset> */}
+      <fieldset  className="postInputField">
+        {tags.map(t => (<FormControlLabel
+        control={<Checkbox checked={post.tag_id} onChange={handleControlledCheckChange} name="checkedA" />}
+        label={t.label}
+      />))}
+      </fieldset>
       <div className="postButton-flex">
       <Button variant="contained" color="primary" className="btn btn-primary"
           // disabled={isLoading}
