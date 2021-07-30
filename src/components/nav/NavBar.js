@@ -28,6 +28,14 @@ export const NavBar = () => {
             <li className="navbar__item">
                 {userId > 0
                 ?
+                <Link className="navbar__link" to="/categories">Categories manager</Link>
+                :
+                <Link className="navbar__link" onClick={() => {history.push("/login")}}>Categories manager</Link>
+                }
+            </li>
+            <li className="navbar__item">
+                {userId > 0
+                ?
                 <Link className="navbar__link" to="/tags">Tag manager</Link>
                 :
                 <Link className="navbar__link" onClick={() => {history.push("/login")}}>Tag manager</Link>
