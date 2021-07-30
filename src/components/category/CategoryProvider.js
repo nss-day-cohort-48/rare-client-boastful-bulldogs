@@ -27,11 +27,11 @@ const createCategory = (newCategoryObj) => {
     })
 }
 
-const deleteCategory = categoryId => {
-    return fetch(`http://localhost:8088/category/${categoryId}`, {
-        method: "DELETE"
+const deleteCategory = (categoryId) => {
+    return fetch(`http://localhost:8088/categories/${categoryId}`, {
+        method: "DELETE",
     })
-    .then(getAllCategories)
+    .then(getAllCategories);
 }
 
     return (

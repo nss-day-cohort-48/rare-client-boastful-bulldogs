@@ -18,7 +18,7 @@ const history = useHistory()
 
 const handleDelete = (id) => {
     deleteCategory(id)
-    .then(getAllCategories())
+    // .then(getAllCategories)
     .then(history.push("/categories"))
 }
 
@@ -30,7 +30,7 @@ return (
         return (
         <>
             <div>{category.label}</div>
-            <button onClick={handleDelete(category.id)}>Delete Category</button>
+            <button onClick={() => handleDelete(category.id)}>Delete Category</button>
             
         </>
         );
