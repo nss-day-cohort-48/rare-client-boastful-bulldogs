@@ -142,7 +142,7 @@ export const PostEdit = () => {
       </fieldset> */}
       <div className="postButton-flex">
       <Button variant="contained" color="primary" className="btn btn-primary"
-          disabled={isLoading}
+          // disabled={isLoading}
           onClick={event => {
             event.preventDefault() // Prevent browser from submitting the form and refreshing the page
             handleAdd()
