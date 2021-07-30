@@ -34,7 +34,8 @@ export const PostForm = () => {
     publication_date: 0,
     image_url: "",
     content: "",
-    approved: 0
+    approved: 0,
+    tags: []
   })
 
   const handleControlledInputChange = e => {
@@ -61,9 +62,10 @@ export const PostForm = () => {
 //     console.log(newPic.file[0])
 //     setPic(newPic)
 //   }
-const handleControlledCheckChange = e => {
+  const handleControlledCheckChange = e => {
     const newPost = { ...post }
-    newPost.tagId = e.target.value
+    newPost.tags.push(parseInt(e.target.value))
+    debugger
     setPost(newPost)
   }
 
@@ -128,7 +130,7 @@ const handleControlledCheckChange = e => {
         </fieldset>
         <fieldset  className="postInputField">
         {tags.map(t => (<FormControlLabel
-        control={<Checkbox checked={post.tag_id} onChange={handleControlledCheckChange} name="checkedA" />}
+        control={<Checkbox value={t.id}  onChange={handleControlledCheckChange} name="checkedA" />}
         label={t.label}
       />))}
       </fieldset>
