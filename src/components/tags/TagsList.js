@@ -31,7 +31,7 @@ export const TagsList = () => {
           <>
             <div>ID: {tag.id}</div>
             <div>Label: {tag.label}</div>
-            <button onClick={handleDelete}>Delete Tag</button>
+            <button onClick={() => handleDelete(tag.id)}>Delete Tag</button>
           </>
         );
       })}
