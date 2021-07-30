@@ -34,7 +34,6 @@ export const PostProvider = (props) => {
         return fetch(`http://localhost:8088/myposts/${postId}`, {
             method: "DELETE"
         })
-        .then(getPostsByUserId)
     }
 
     const addPost = (postObj) => {

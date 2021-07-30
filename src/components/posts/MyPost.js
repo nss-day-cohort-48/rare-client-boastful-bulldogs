@@ -5,7 +5,7 @@ import { PostContext } from "./PostProvider"
 import { HumanDate } from "../utils/HumanDate"
 
 export const MyPost = () => {
-  const { getPostById, deleteMyPost } = useContext(PostContext)
+  const { getPostById, deleteMyPost, getPostsByUserId } = useContext(PostContext)
   const userId = parseInt(localStorage.getItem("rare_user_id"))
  
   const history = useHistory()
@@ -18,6 +18,11 @@ export const MyPost = () => {
         .then((data) => setPostDetail(data))
   }, [])
 
+  const handleDelete = () => {
+    deleteMyPost(parseInt(postId))
+    .then(getPostsByUserId(userId))
+    .then(history.push("/myposts"))
+  }
   
   
   return (
@@ -36,10 +41,7 @@ export const MyPost = () => {
             ?
             <div className="post-buttons">
                 <button className="post-button">Edit</button>
-                <button className="post-button" onClick={() => {
-                    deleteMyPost(parseInt(postId))
-                    history.push("/myposts")
-                    }}>Delete</button>
+                <button className="post-button" onClick={handleDelete}>Delete</button>
             </div>
             : 
             <><div className="post-buttons"></div></>
