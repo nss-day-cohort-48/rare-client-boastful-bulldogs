@@ -27,6 +27,13 @@ const createCategory = (newCategoryObj) => {
     })
 }
 
+const deleteCategory = categoryId => {
+    return fetch(`http://localhost:8088/category/${categoryId}`, {
+        method: "DELETE"
+    })
+    .then(getAllCategories)
+}
+
     return (
         <CategoryContext.Provider
         value={{
@@ -34,6 +41,7 @@ const createCategory = (newCategoryObj) => {
             getAllCategories,
             getCategoryById,
             createCategory,
+            deleteCategory,
         }}
         >
         {props.children}
