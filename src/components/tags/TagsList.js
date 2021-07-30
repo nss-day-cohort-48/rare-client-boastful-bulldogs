@@ -10,8 +10,8 @@ export const TagsList = () => {
     getAllTags();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const sortedTags = tags.sort((a, b) => {
-    return a.label - b.label;
+  const sortedTags = [...tags].sort((a, b) => {
+    return a.label.localeCompare(b.label);
   });
 
   return (
