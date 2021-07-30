@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom"
 // import { stateCodes } from '../search/stateCodes'
 // import { UserContext } from "../user/UserProvider"
 import { PostContext } from "./PostProvider"
+import { CategoryContext } from "../category/CategoryProvider"
 import { Button, Input, Select, MenuItem, InputLabel } from "@material-ui/core"
 import { FormControlLabel, Radio } from "@material-ui/core"
 import { DateTime } from "luxon";
@@ -11,6 +12,7 @@ import { DateTime } from "luxon";
 export const PostEdit = () => {
 //   const { updateUser, getUserById } = useContext(UserContext)
   const { updatePost, getPostById } = useContext(PostContext)
+  const { categories, getAllCategories } = useContext(CategoryContext)
   const [ isLoading, setIsLoading ] = useState(true)
   const userId = localStorage.getItem("rare_user_id")
   const history = useHistory()
@@ -35,6 +37,7 @@ export const PostEdit = () => {
   })
   
   useEffect(() => {
+      getAllCategories()
       getPostById(postId)
       .then(post =>{
           setPost(post)
@@ -111,20 +114,20 @@ export const PostEdit = () => {
           <Input margin="dense" type="text" id="content" required className="form-control" placeholder="Content" value={post.content} onChange={handleControlledInputChange} />
         </div>
       </fieldset>
-      {/* <div className="postFormFlex"> */}
-      {/* <fieldset className="postInputField">
-          <div className="form-group post-state-field">
-            <InputLabel htmlFor="location">State:</InputLabel>
-            <Select name="state_mode" required id="state_code" className="SearchForm-control SearchFormDropDown-control" value={house.state_code} onChange={handleControlledStateChange}>
-              {/* <option value="0">Select</option> */}
-              {/* {stateCodes.map(s => (
-                <MenuItem key={s} value={s}>
-                  {s}
+      <div className="postFormFlex">
+      <fieldset className="postInputField">
+          <div className="form-group post-category-field">
+            <InputLabel htmlFor="category">Categories:</InputLabel>
+            <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category_id} onChange={handleControlledCategoryChange}>
+              <option value="0">Select</option>
+                {categories.map(c => (
+                <MenuItem key={c.id} value={c.id}>
+                  {c.label}
                 </MenuItem>
               ))}
             </Select>
           </div>
-              </fieldset>  */ }
+        </fieldset>
         <fieldset className="postInputField">
           <div className="form-group">
             <label htmlFor="image_url">Image URL:</label>
@@ -146,6 +149,7 @@ export const PostEdit = () => {
           }}>
           Add Post
       </Button>
+      </div>
       </div>
     </form>
     </div>
