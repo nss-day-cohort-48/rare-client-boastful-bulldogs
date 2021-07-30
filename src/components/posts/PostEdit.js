@@ -24,7 +24,7 @@ export const PostEdit = () => {
     user_id: parseInt(userId),
     category_id: 1,
     title: "",
-    publication_date: 0,
+    publication_date: post.publication_date,
     image_url: "",
     content: "",
     approved: 0
@@ -79,7 +79,7 @@ export const PostEdit = () => {
         user_id: parseInt(userId),
         category_id: 1,
         title: post.title,
-        publication_date: now.toISODate(),
+        publication_date: post.publication_date,
         image_url: post.image_url,
         content: post.content,
         approved: 0
