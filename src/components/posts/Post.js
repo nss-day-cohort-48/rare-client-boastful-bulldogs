@@ -52,7 +52,7 @@ export const Post = () => {
             }
 
             <button onClick={() => {
-              history.push(`/posts/comments/${postId}`)
+              history.push(`/comments/${postId}`)
             }}>Add Comment</button>
 
         </section>

@@ -6,14 +6,12 @@ import { CommentContext } from "./CommentProvider"
 export const CommentForm = () => {
     const { createComment } = useContext(CommentContext)
 
-    const [ comments, setComments ] = useState(
-        {
-            post_id: 0,
-            author_id: 0,
-            content: "",
-            created_on: ""
-        }
-    )
+    const [ comments, setComments ] = useState({
+        post_id: 0,
+        author_id: 0,
+        content: "",
+        created_on: ""
+    })
     
     const userId = parseInt(localStorage.getItem("rare_user_id"))
     const { postId } = useParams()
@@ -25,8 +23,7 @@ export const CommentForm = () => {
         setComments(newComment)
     }
 
-    const handleSaveComment = (event) => {
-        event.preventDefualt()
+    const handleSaveComment = () => {
 
         if (comments.content === "" ) {
             window.alert('Please fill in comment field before submitting')
@@ -38,7 +35,7 @@ export const CommentForm = () => {
                 created_on: new Date().toLocaleDateString()
             }
             createComment(newComment)
-            .then(() => history.push(`/posts/${postId}`))
+            // .then(() => history.push(`/posts/${postId}`))
         }
     }
 
@@ -55,7 +52,11 @@ export const CommentForm = () => {
                 </div>
                 </fieldset>
 
-                <button onClick={handleSaveComment}>Save Comment</button>
+                <button onClick={(event) => {
+                    event.preventDefault()
+                    handleSaveComment()
+                    history.push(`/posts/${postId}`)
+                }}>Save Comment</button>
             </form>
         </>
     )

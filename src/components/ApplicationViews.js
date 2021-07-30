@@ -48,7 +48,7 @@ export const ApplicationViews = () => {
             <PostEdit />
         </Route>
 
-        <Route path="/posts/comments/:postId(\d+)">
+        <Route path="/comments/:postId(\d+)">
             <CommentForm />
         </Route>
 
