@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import { PostProvider } from "./posts/PostProvider";
 import { PostList } from "./posts/PostList";
 import { Post } from "./posts/Post";
+import { MyPost } from "./posts/MyPost";
 import { MyPostList } from "./posts/MyPostList";
 import { CategoriesList } from "./category/CategoryList";
 import { CategoryProvider } from "./category/CategoryProvider";
@@ -46,6 +47,10 @@ export const ApplicationViews = () => {
 
         <Route exact path="/myposts">
           <MyPostList />
+        </Route>
+
+        <Route exact path="/myposts/:postId(\d+)">
+          <MyPost />
         </Route>
       </PostProvider>
       </CategoryProvider>
