@@ -26,6 +26,8 @@ export const ApplicationViews = () => {
       ></main>
 
         {/* Render Posts */}
+      <TagsProvider>
+      <CategoryProvider>
       <PostProvider>
         <Route exact path="/posts">
             <PostList/>
@@ -51,6 +53,8 @@ export const ApplicationViews = () => {
           <MyPost />
         </Route>
       </PostProvider>
+      </CategoryProvider>
+      </TagsProvider>
 
       <CategoryProvider>
         <Route exact path="/categories">

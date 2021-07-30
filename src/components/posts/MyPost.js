@@ -40,7 +40,7 @@ export const MyPost = () => {
             {userId === postDetail.user_id 
             ?
             <div className="post-buttons">
-                <button className="post-button">Edit</button>
+                <button className="post-button" onClick={() => history.push(`/posts/edit/${postDetail.id}`)}>Edit</button>
                 <button className="post-button" onClick={handleDelete}>Delete</button>
             </div>
             : 

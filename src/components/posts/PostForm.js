@@ -4,6 +4,8 @@ import { useHistory, useParams } from "react-router-dom"
 // import { stateCodes } from '../search/stateCodes'
 // import { UserContext } from "../user/UserProvider"
 import { PostContext } from "./PostProvider"
+import { TagsContext } from "../tags/TagsProvider"
+import { CategoryContext } from "../category/CategoryProvider"
 import { Button, Input, Select, MenuItem, InputLabel } from "@material-ui/core"
 import { FormControlLabel, Radio } from "@material-ui/core"
 import { DateTime } from "luxon";
@@ -11,11 +13,19 @@ import { DateTime } from "luxon";
 export const PostForm = () => {
 //   const { updateUser, getUserById } = useContext(UserContext)
   const { addPost } = useContext(PostContext)
+  const { tags, getAllTags } = useContext(TagsContext)
+  const { categories, getAllCategories } = useContext(CategoryContext)
   const [ isLoading, setIsLoading ] = useState(true)
+
   const userId = localStorage.getItem("rare_user_id")
   const history = useHistory()
-  const [user, setUser] = useState({})
+//   const [user, setUser] = useState({})
   const now = DateTime.now()
+
+  useEffect(() => {
+    getAllTags()
+    getAllCategories()
+  }, [])
 
   const [post, setPost] = useState({
     user_id: userId,
@@ -26,11 +36,6 @@ export const PostForm = () => {
     content: "",
     approved: 0
   })
-
-  const [pic, setPic] =useState({
-    file: "",
-  })
-  
 
   const handleControlledInputChange = e => {
     setIsLoading(false)
@@ -67,7 +72,7 @@ export const PostForm = () => {
     // debugger
     let newPost = {
         user_id: parseInt(userId),
-        category_id: 1,
+        category_id: post.category_id,
         title: post.title,
         publication_date: now.toISODate(),
         image_url: post.image_url,
@@ -101,20 +106,20 @@ export const PostForm = () => {
           <Input margin="dense" type="text" id="content" required className="form-control" placeholder="Content" value={post.content} onChange={handleControlledInputChange} />
         </div>
       </fieldset>
-      {/* <div className="postFormFlex"> */}
-      {/* <fieldset className="postInputField">
-          <div className="form-group post-state-field">
-            <InputLabel htmlFor="location">State:</InputLabel>
-            <Select name="state_mode" required id="state_code" className="SearchForm-control SearchFormDropDown-control" value={house.state_code} onChange={handleControlledStateChange}>
-              {/* <option value="0">Select</option> */}
-              {/* {stateCodes.map(s => (
-                <MenuItem key={s} value={s}>
-                  {s}
+      <div className="postFormFlex">
+      <fieldset className="postInputField">
+          <div className="form-group post-category-field">
+            <InputLabel htmlFor="category">Categories:</InputLabel>
+            <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category_id} onChange={handleControlledCategoryChange}>
+              <MenuItem value="0">Select</MenuItem>
+                {categories.map(c => (
+                <MenuItem key={c.id} value={c.id}>
+                  {c.label}
                 </MenuItem>
               ))}
             </Select>
           </div>
-              </fieldset>  */ }
+        </fieldset>
         <fieldset className="postInputField">
           <div className="form-group">
             <label htmlFor="image_url">Image URL:</label>
@@ -136,6 +141,7 @@ export const PostForm = () => {
           }}>
           Add Post
       </Button>
+      </div>
       </div>
     </form>
     </div>
