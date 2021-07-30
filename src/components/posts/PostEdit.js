@@ -95,7 +95,7 @@ export const PostEdit = () => {
     // .then((data) => newHouse.photos.push({href: data.secure_url}))
 
     updatePost(newPost)
-        .then(() => history.push(`/posts`))    
+        .then(() => history.push(`/myposts`))    
   }
 
   return (
