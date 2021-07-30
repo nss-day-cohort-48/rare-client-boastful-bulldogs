@@ -28,6 +28,12 @@ export const TagsProvider = (props) => {
     }).then(getAllTags);
   };
 
+  const deleteTag = (tagId) => {
+    return fetch(`http://localhost:8088/tags/${tagId}`, {
+      method: "DELETE",
+    }).then(getAllTags);
+  };
+
   return (
     <TagsContext.Provider
       value={{
@@ -36,6 +42,7 @@ export const TagsProvider = (props) => {
         getAllTags,
         getTagById,
         addTag,
+        deleteTag,
       }}
     >
       {props.children}
