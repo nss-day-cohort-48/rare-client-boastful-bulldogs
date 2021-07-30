@@ -1,15 +1,14 @@
-import React, { useEffect, useContext, useRef } from "react"
+import React, { useEffect, useContext } from "react"
 import { PostContext } from "./PostProvider"
 import { Link, useHistory } from "react-router-dom"
 import "./Post.css"
 
 
 export const PostList = () => {
-    const { posts, getAllPosts, getPostById, deletePost } = useContext(PostContext)
+    const { posts, getAllPosts, getPostById } = useContext(PostContext)
     const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
-    const deleteWarning = useRef()
 
     useEffect(() => {
         getAllPosts()
@@ -24,12 +23,6 @@ export const PostList = () => {
         .then(() => history.push(`/posts/${id}`))
       }
 
-
-    const handleDeleteWarning = (e) => {
-        e.preventDefault()
-        deleteWarning.current.showModal()
-        return
-    }
     
     return (
         <>
@@ -39,23 +32,7 @@ export const PostList = () => {
                 sortedPosts.map(post => {
                     return (
                         <>
-                        <dialog className="dialog dialog--delete" ref={deleteWarning}>
-                            <div>Are you sure you want to delete this post?</div>
-                            <div className="modal-buttons">
-                                <button className="button--close" onClick={e => deleteWarning.current.close()}>Close</button>
-                                <button className="button--close" onClick={() => {deletePost(post.id)}}>Delete Post</button>
-                            </div>
-                        </dialog>
                         <div className="post-list">
-                            {userId === post.user_id 
-                            ?
-                            <div className="post-buttons">
-                                <button className="post-button">Edit</button>
-                                <button onClick={handleDeleteWarning}>Delete</button>
-                            </div>
-                            : 
-                            <><div className="post-buttons"></div></>
-                            }
                             <div>
                                 <div>Title: <Link className="title_link" onClick={() => {handlePostClick(post.id)}}>{post.title}</Link></div>
                                 <div>Author: {post.user.first_name} {post.user.last_name}</div>

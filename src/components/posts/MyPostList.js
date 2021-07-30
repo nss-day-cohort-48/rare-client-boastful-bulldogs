@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from "react"
+import React, { useEffect, useContext } from "react"
 import { PostContext } from "./PostProvider"
 import { Link, useHistory } from "react-router-dom"
 import "./Post.css"
@@ -9,7 +9,6 @@ export const MyPostList = () => {
     const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
-    const deleteWarning = useRef()
     
     useEffect(() => {
         getPostsByUserId(userId)
@@ -21,14 +20,7 @@ export const MyPostList = () => {
     
     const handlePostClick = (id) => {
         getPostById(id)
-        .then(() => history.push(`/posts/${id}`))
-    }
-    
-    const handleDeleteWarning = () => {
-        if (deleteWarning !== "") {
-            deleteWarning.current.showModal()
-            return
-        }
+        .then(() => history.push(`/myposts/${id}`))
     }
     
     
@@ -40,19 +32,11 @@ export const MyPostList = () => {
                 sortedPosts.map(post => {
                     return (
                         <>
-                        <dialog className="dialog dialog--delete" ref={deleteWarning}>
-                            <div>Are you sure you want to delete this post?</div>
-                            <div className="modal-buttons">
-                                <button className="button--close" onClick={e => deleteWarning.current.close()}>Close</button>
-                                <button className="button--close" onClick={() => {deleteMyPost(post.id)}}>Delete Post</button>
-                            </div>
-                        </dialog>
                         <div className="post-list">
                             {userId === post.user_id 
                             ?
                             <div className="post-buttons">
                                 <button className="post-button">Edit</button>
-                                <button onClick={handleDeleteWarning}>Delete</button>
                             </div>
                             : 
                             <><div className="post-buttons"></div></>
