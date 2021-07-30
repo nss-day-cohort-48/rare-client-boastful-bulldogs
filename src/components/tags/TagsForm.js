@@ -49,11 +49,11 @@ export const TagsForm = () => {
           <div>
             {/* SAVE BUTTON */}
             <button
-              disabled={isLoading}
+              // disabled={isLoading}
               onClick={(event) => {
                 event.preventDefault();
                 handleSaveTag();
-                setTag({});
+                // setTag({});
                 onClick();
               }}
             >
