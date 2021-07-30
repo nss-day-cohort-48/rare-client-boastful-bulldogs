@@ -10,11 +10,15 @@ useEffect(() => {
     getAllCategories();
 }, []);
 
+const sortedCategories = categories.sort((a,b) => {
+    return a.label.localeCompare(b.label)
+})
+
 return (
     <>
     <h1>All Categories</h1>
 
-    {categories.map((category) => {
+    {sortedCategories.map((category) => {
         return (
         <>
             <div>{category.label}</div>
