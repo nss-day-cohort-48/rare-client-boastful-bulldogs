@@ -79,7 +79,8 @@ export const PostForm = () => {
         publication_date: now.toISODate(),
         image_url: post.image_url,
         content: post.content,
-        approved: 0
+        approved: 0,
+        tags: post.tags
     }
     // const data = new FormData()
     // data.append("file", pic.file[0])
