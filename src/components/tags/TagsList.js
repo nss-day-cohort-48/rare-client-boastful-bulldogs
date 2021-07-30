@@ -25,6 +25,7 @@ export const TagsList = () => {
           <>
             <div>ID: {tag.id}</div>
             <div>Label: {tag.label}</div>
+            <button>Delete Tag</button>
           </>
         );
       })}
