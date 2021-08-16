@@ -50,11 +50,11 @@ export const NavBar = () => {
                 }
             </li>
             {
-                (localStorage.getItem("lu_token") !== null) ?
+                (localStorage.getItem("rare_user_id") !== null) ?
                     <li className="nav-item">
                         <button className="nav-link fakeLink"
                             onClick={() => {
-                                localStorage.removeItem("lu_token")
+                                localStorage.removeItem("rare_user_id")
                                 history.push({ pathname: "/posts" })
                             }}
                         >Logout</button>
