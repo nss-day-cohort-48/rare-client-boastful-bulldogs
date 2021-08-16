@@ -9,6 +9,7 @@ export const Register = (props) => {
     const password = useRef()
     const verifyPassword = useRef()
     const passwordDialog = useRef()
+    const bio = useRef()
 
     const history = useHistory()
 
@@ -21,7 +22,7 @@ export const Register = (props) => {
                 "first_name": first_name.current.value,
                 "last_name": last_name.current.value,
                 "email": email.current.value,
-                "bio": "",
+                "bio": bio.current.value,
                 "username": email.current.value,
                 "password": password.current.value,
                 "profile_image_url": "",
@@ -29,7 +30,7 @@ export const Register = (props) => {
                 "active": 1
             }
 
-            return fetch("http://127.0.0.1:8088/register", {
+            return fetch("http://127.0.0.1:8000/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -76,6 +77,10 @@ export const Register = (props) => {
                 <fieldset>
                     <label htmlFor="verifyPassword"> Verify Password </label>
                     <input ref={verifyPassword} type="password" name="verifyPassword" className="form-control" placeholder="Verify password" required />
+                </fieldset>
+                <fieldset>
+                    <label htmlFor="verifyPassword"> Bio </label>
+                    <textarea ref={bio} name="bio" className="form-control" placeholder="Let other users know a little bit about you..." />
                 </fieldset>
                 <fieldset style={{
                     textAlign: "center"

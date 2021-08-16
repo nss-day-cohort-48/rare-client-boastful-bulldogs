@@ -64,8 +64,20 @@ export const PostForm = () => {
 //   }
   const handleControlledCheckChange = e => {
     const newPost = { ...post }
+
+    // if (newPost.tags.indexOf(parseInt(e.target.value)) > -1) {
+    //     newPost.tags.splice(newPost.tags.indexOf(parseInt(e.target.value)) - 1, newPost.tags.indexOf(parseInt(e.target.value)))
+    // } else {
+    //     newPost.tags.push(parseInt(e.target.value))
+    // }
+    
+    // setPost(newPost)
+    const tagIndex = newPost.tags.indexOf(parseInt(e.target.value))
+    if (tagIndex > -1) {
+      newPost.tags.splice(tagIndex, 1)
+    } else {
     newPost.tags.push(parseInt(e.target.value))
-    debugger
+    }
     setPost(newPost)
   }
 
@@ -131,7 +143,7 @@ export const PostForm = () => {
         </fieldset>
         <fieldset  className="postInputField">
         {tags.map(t => (<FormControlLabel
-        control={<Checkbox value={t.id}  onChange={handleControlledCheckChange} name="checkedA" />}
+        control={<Checkbox value={t.id} onChange={handleControlledCheckChange} name="tag" />}
         label={t.label}
       />))}
       </fieldset>
@@ -150,3 +162,5 @@ export const PostForm = () => {
     </div>
   )
 }
+
+// post.tags.indexOf(t.id) > -1 ? post.tags.splice(post.tags.indexOf(t.id) - 1, post.tags.indexOf(t.id)) : t.id
