@@ -27,12 +27,12 @@ export const TagsForm = () => {
     }
   }, [tagId]);
 
-  // const handleSaveTag = () => {
-  //   setIsLoading(true);
-  //   addTag({
-  //     label: tag.label,
-  //   }).then(() => history.push("/tags"));
-  // };
+  const handleSaveTag = () => {
+    setIsLoading(true);
+    addTag({
+      label: tag.label,
+    }).then(() => history.push("/tags"));
+  };
 
   useEffect(() => {
     setIsLoading(false);
@@ -40,10 +40,9 @@ export const TagsForm = () => {
 
   return (
     <>
-      {/* tagId ? PASS IN PARAMS : show everything else */}
-      {tagId ? (
+      {showNewTagField ? (
         <form>
-          <h3>Edit Tag</h3>
+          <h3>Create a New Tag</h3>
           <fieldset>
             <div className="button_container">
               <input
@@ -52,6 +51,7 @@ export const TagsForm = () => {
                 name="label"
                 required
                 autoFocus
+                placeholder="New Tag Label"
                 onChange={handleControlledInputChange}
               />
             </div>
@@ -63,10 +63,8 @@ export const TagsForm = () => {
               // disabled={isLoading}
               onClick={(event) => {
                 event.preventDefault();
-                const editedTag = {
-                  label: tag.label,
-                };
-                editTag(editedTag).then(() => history.push("/tags"));
+                handleSaveTag();
+                // setTag({});
                 onClick();
               }}
             >
@@ -85,65 +83,15 @@ export const TagsForm = () => {
         </form>
       ) : (
         <>
-          {showNewTagField ? (
-            <>
-              <form>
-                <h3>Create a New Tag</h3>
-                <fieldset>
-                  <div className="button_container">
-                    <input
-                      type="text"
-                      id="label"
-                      name="label"
-                      required
-                      autoFocus
-                      placeholder="New Tag Label"
-                      onChange={handleControlledInputChange}
-                    />
-                  </div>
-                </fieldset>
-                {/* BUTTONS */}
-                <div>
-                  {/* SAVE BUTTON */}
-                  <button
-                    // disabled={isLoading}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      setIsLoading(true);
-                      addTag({
-                        label: tag.label,
-                      }).then(() => history.push("/tags"));
-                      // setTag({});
-                      onClick();
-                    }}
-                  >
-                    Save Tag
-                  </button>
-                  {/* CANCEL BUTTON */}
-                  <button
-                    className="button cancel_button"
-                    onClick={() => {
-                      onClick();
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </>
-          ) : (
-            <>
-              <button
-                className="button cancel_button"
-                onClick={() => {
-                  onClick();
-                }}
-              >
-                Create a New Tag
-              </button>
-              <br></br>
-            </>
-          )}
+          <button
+            className="button cancel_button"
+            onClick={() => {
+              onClick();
+            }}
+          >
+            Create a New Tag
+          </button>
+          <br></br>
         </>
       )}
     </>
