@@ -1,46 +1,88 @@
-import React, { useContext, useState } from "react"
-import { useHistory } from "react-router-dom"
-import { CategoryContext } from "./CategoryProvider"
-
+import { useHistory } from "react-router-dom";
+import { CategoryContext } from "./CategoryProvider";
+import React, { useContext, useEffect, useState } from "react";
 
 export const CategoryForm = () => {
+  const { createCategory } = useContext(CategoryContext);
+  const history = useHistory();
+  const [category, setCategory] = useState({});
+  const [showNewCategoryField, setNewCateogyField] = useState(false);
+  const onClick = () => setNewCateogyField(!showNewCategoryField);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const {createCategory} = useContext(CategoryContext)
+  const handleControlledInputChange = (event) => {
+    const newCategory = { ...category };
+    newCategory[event.target.id] = event.target.value;
+    setCategory(newCategory);
+  };
 
-    const [category, setCategory] = useState({})
-    const history = useHistory();
+  const handleSaveCategory = () => {
+    setIsLoading(true);
+    createCategory({
+      label: category.label,
+    }).then(() => history.push("/categories"));
+  };
 
-    const handleControlledInputChange = (e) => {
-        const newCategory = {...category}
-        newCategory[e.target.id] = e.target.value
-        setCategory(newCategory)
-    }
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
-    const handleSaveCategory = () => {
-        createCategory({
-            label: category.label
-        })
-        .then(() => history.push("/categories"))
-    }
-
-    return (
+  return (
+    <>
+      {showNewCategoryField ? (
         <form>
-            <h2>Create a new category</h2>
-            <fieldset>
-                <div>
-                    <input type="text" id="label" name="label" required autoFocus placeholder="input category name"
-                    onChange={handleControlledInputChange}/>
-                </div>
-            </fieldset>
-            <div>
-                <button
-                onClick={e => {
-                    e.preventDefault()
-                    handleSaveCategory()
-                    setCategory("")
-                }}>Save</button>
+          <h3>Create a New Category</h3>
+          <fieldset>
+            <div className="button_container">
+              <input
+                type="text"
+                id="label"
+                name="label"
+                required
+                autoFocus
+                placeholder="New Category Label"
+                onChange={handleControlledInputChange}
+              />
             </div>
+          </fieldset>
+          {/* BUTTONS */}
+          <div>
+            {/* SAVE BUTTON */}
+            <button
+              // disabled={isLoading}
+              onClick={(event) => {
+                event.preventDefault();
+                handleSaveCategory();
+                // setCategory({});
+                onClick();
+              }}
+            >
+              Save Category
+            </button>
+            {/* CANCEL BUTTON */}
+            <button
+              className="button cancel_button"
+              onClick={() => {
+                onClick();
+              }}
+            >
+              Cancel
+            </button>
+          </div>
         </form>
-    )
-
-}
+      ) : (
+        <>
+          <button
+            className="button cancel_button"
+            onClick={() => {
+              onClick();
+            }}
+          >
+            Create a New Category
+          </button>
+          <br></br>
+        </>
+      )}
+    </>
+  );
+};

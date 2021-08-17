@@ -11,8 +11,7 @@ export const TagsProvider = (props) => {
       headers: {
           "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       },
-  })
-      .then((res) => res.json())
+      }).then((res) => res.json())
       .then((data) => setTags(data)); // updates state with tags from server
   };
 
@@ -21,9 +20,8 @@ export const TagsProvider = (props) => {
       headers: {
           "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
       },
-  })
-      .then((res) => res.json())
-      .then(setTag);
+      }).then((res) => res.json())
+        .then(setTag);
   };
 
   const addTag = (tag) => {
