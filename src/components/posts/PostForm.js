@@ -7,7 +7,7 @@ import { PostContext } from "./PostProvider"
 import { TagsContext } from "../tags/TagsProvider"
 import { CategoryContext } from "../category/CategoryProvider"
 import { Button, Input, Select, MenuItem, InputLabel } from "@material-ui/core"
-import { FormControlLabel, Radio } from "@material-ui/core"
+import { FormControlLabel, Checkbox } from "@material-ui/core"
 import { DateTime } from "luxon";
 
 export const PostForm = () => {
@@ -34,7 +34,8 @@ export const PostForm = () => {
     publication_date: 0,
     image_url: "",
     content: "",
-    approved: 0
+    approved: 0,
+    tags: []
   })
 
   const handleControlledInputChange = e => {
@@ -61,11 +62,24 @@ export const PostForm = () => {
 //     console.log(newPic.file[0])
 //     setPic(newPic)
 //   }
-//   const handleControlledRadioChange = e => {
-//     const newHouse = { ...house }
-//     newHouse.userTypeId = e.target.value
-//     setHouse(newHouse)
-//   }
+  const handleControlledCheckChange = e => {
+    const newPost = { ...post }
+
+    // if (newPost.tags.indexOf(parseInt(e.target.value)) > -1) {
+    //     newPost.tags.splice(newPost.tags.indexOf(parseInt(e.target.value)) - 1, newPost.tags.indexOf(parseInt(e.target.value)))
+    // } else {
+    //     newPost.tags.push(parseInt(e.target.value))
+    // }
+    
+    // setPost(newPost)
+    const tagIndex = newPost.tags.indexOf(parseInt(e.target.value))
+    if (tagIndex > -1) {
+      newPost.tags.splice(tagIndex, 1)
+    } else {
+    newPost.tags.push(parseInt(e.target.value))
+    }
+    setPost(newPost)
+  }
 
   const handleAdd = (e) => {
     setIsLoading(true)
@@ -77,7 +91,8 @@ export const PostForm = () => {
         publication_date: now.toISODate(),
         image_url: post.image_url,
         content: post.content,
-        approved: 0
+        approved: 0,
+        tags: post.tags
     }
     // const data = new FormData()
     // data.append("file", pic.file[0])
@@ -126,12 +141,12 @@ export const PostForm = () => {
             <Input  margin="dense"type="text" id="image_url" className="SearchForm-control" placeholder="image URL" value={post.image_url} onChange={handleControlledInputChange} />
           </div>
         </fieldset>
-      {/* <fieldset  className="postInputField">
-        <div className="radios">
-                <FormControlLabel className="radio" id="userTypeId"  value="1" checked={parseInt(house.userTypeId) === 1 ? true : false} control={<Radio />} label="For Rent" onChange={handleControlledRadioChange} />
-                <FormControlLabel className="radio" id="userTypeId"  value="2" checked={parseInt(house.userTypeId) === 2 ? true : false } control={<Radio />} label="For Sale" onChange={handleControlledRadioChange} />
-                </div>
-      </fieldset> */}
+        <fieldset  className="postInputField">
+        {tags.map(t => (<FormControlLabel
+        control={<Checkbox value={t.id} onChange={handleControlledCheckChange} name="tag" />}
+        label={t.label}
+      />))}
+      </fieldset>
       <div className="postButton-flex">
       <Button variant="contained" color="primary" className="btn btn-primary"
           disabled={isLoading}
@@ -147,3 +162,5 @@ export const PostForm = () => {
     </div>
   )
 }
+
+// post.tags.indexOf(t.id) > -1 ? post.tags.splice(post.tags.indexOf(t.id) - 1, post.tags.indexOf(t.id)) : t.id
