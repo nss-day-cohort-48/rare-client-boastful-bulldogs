@@ -6,12 +6,6 @@ export const PostProvider = (props) => {
   const [posts, setPosts] = useState([]);
 
   const getAllPosts = () => {
-    return fetch("http://localhost:8000/posts")
-      .then((res) => res.json())
-      .then((data) => setPosts(data)); // updates state with posts from server
-  };
-
-  const getAllPosts = () => {
       return fetch("http://localhost:8000/posts", {
           headers: {
               "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
