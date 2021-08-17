@@ -1,29 +1,47 @@
 import React, { useEffect, useContext } from "react";
 import { CategoryContext } from "./CategoryProvider";
-import { Link } from "react-router-dom";
+import { CategoryForm } from "./CategoryForm";
+import { useHistory } from "react-router-dom";
 import "./Category.css";
 
 export const CategoriesList = () => {
-const { categories, getAllCategories } = useContext(CategoryContext);
+  const { category, categories, getAllCategories, deleteCategory } =
+    useContext(CategoryContext);
+  const history = useHistory();
 
-useEffect(() => {
+  useEffect(() => {
     getAllCategories();
-}, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-return (
+  const sortedcategories = [...categories].sort((a, b) => {
+    return a.label.localeCompare(b.label);
+  });
+
+  const handleDelete = (categoryId) => {
+    deleteCategory(categoryId).then(history.push("/categories"));
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
+  return (
     <>
-    <h1>All Categories</h1>
-
-    {categories.map((category) => {
+      <h1>All Categories</h1>
+      <br></br>
+      <CategoryForm />
+      <br></br>
+      {sortedcategories.map((category) => {
         return (
-        <>
-            <div>{category.label}</div>
-        </>
+          <>
+            <div>ID: {category.id}</div>
+            <div>Label: {category.label}</div>
+            <button onClick={() => handleDelete(category.id)}>
+              Delete category
+            </button>
+          </>
         );
-    })}
-
-    <Link to="/categories/create"><button> Create Category</button></Link>
-
+      })}
     </>
-);
+  );
 };
