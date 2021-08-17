@@ -26,16 +26,14 @@ export const TagsProvider = (props) => {
       .then(setTag);
   };
 
-  const addTag = (tag) => {
-    return fetch("http://localhost:8000/tags", {
+  const addTag = (newTagObj) => {
+    return fetch(`http://localhost:8000/tags`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        headers: {
-          Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-        },
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
-      body: JSON.stringify(tag),
+      body: JSON.stringify(newTagObj),
     }).then(getAllTags);
   };
 

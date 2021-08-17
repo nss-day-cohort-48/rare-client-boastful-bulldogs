@@ -36,6 +36,7 @@ export const CategoriesList = () => {
           <>
             <div>ID: {category.id}</div>
             <div>Label: {category.label}</div>
+            <button>Edit Category</button>
             <button onClick={() => handleDelete(category.id)}>
               Delete category
             </button>
