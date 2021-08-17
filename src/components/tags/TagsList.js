@@ -2,14 +2,18 @@ import React, { useEffect, useContext } from "react";
 import { TagsContext } from "./TagsProvider";
 import "./Tags.css";
 import { TagsForm } from "./TagsForm";
+import { ProfileContext } from "../auth/AuthProvider.js"
 import { useHistory } from "react-router-dom";
 
 export const TagsList = () => {
   const { tag, tags, getAllTags, deleteTag } = useContext(TagsContext);
   const history = useHistory();
+  const { profile, getProfile } = useContext(ProfileContext)
 
   useEffect(() => {
     getAllTags();
+    getProfile()
+
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sortedTags = [...tags].sort((a, b) => {
@@ -24,14 +28,14 @@ export const TagsList = () => {
     <>
       <h1>All Tags</h1>
       <br></br>
-      <TagsForm />
+      {profile.user?.is_staff ? <TagsForm /> : ""}
       <br></br>
       {sortedTags.map((tag) => {
         return (
           <>
             <div>ID: {tag.id}</div>
             <div>Label: {tag.label}</div>
-            <button onClick={() => handleDelete(tag.id)}>Delete Tag</button>
+            { profile.user?.is_staff ? <button onClick={() => handleDelete(tag.id)}>Delete Tag</button> : ""}
           </>
         );
       })}
