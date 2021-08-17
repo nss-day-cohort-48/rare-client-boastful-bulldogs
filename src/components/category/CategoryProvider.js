@@ -12,7 +12,7 @@ export const CategoryProvider = (props) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setCategories(data)); // updates state with tags from server
+      .then((data) => setCategories(data)); // updates state with categorys from server
   };
 
   const getCategoryById = (categoryId) => {
@@ -43,6 +43,19 @@ export const CategoryProvider = (props) => {
     }).then(getAllCategories);
   };
 
+  const editCategory = (category) => {
+    return fetch(`http://localhost:8000/categories/${category.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+        },
+      },
+      body: JSON.stringify(category),
+    }).then(getAllCategories);
+  };
+
   return (
     <CategoryContext.Provider
       value={{
@@ -51,6 +64,7 @@ export const CategoryProvider = (props) => {
         getCategoryById,
         createCategory,
         deleteCategory,
+        editCategory,
       }}
     >
       {props.children}

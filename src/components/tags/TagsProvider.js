@@ -7,13 +7,21 @@ export const TagsProvider = (props) => {
   const [tag, setTag] = useState({});
 
   const getAllTags = () => {
-    return fetch("http://localhost:8000/tags")
+    return fetch("http://localhost:8000/tags", {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setTags(data)); // updates state with tags from server
   };
 
   const getTagById = (tag_id) => {
-    return fetch(`http://localhost:8000/tags/${tag_id}`)
+    return fetch(`http://localhost:8000/tags/${tag_id}`, {
+      headers: {
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+      },
+    })
       .then((res) => res.json())
       .then(setTag);
   };
@@ -23,6 +31,9 @@ export const TagsProvider = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+        },
       },
       body: JSON.stringify(tag),
     }).then(getAllTags);
@@ -31,6 +42,22 @@ export const TagsProvider = (props) => {
   const deleteTag = (tagId) => {
     return fetch(`http://localhost:8000/tags/${tagId}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+      },
+    }).then(getAllTags);
+  };
+
+  const editTag = (tag) => {
+    return fetch(`http://localhost:8000/tags/${tag.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+        },
+      },
+      body: JSON.stringify(tag),
     }).then(getAllTags);
   };
 
@@ -43,6 +70,7 @@ export const TagsProvider = (props) => {
         getTagById,
         addTag,
         deleteTag,
+        editTag,
       }}
     >
       {props.children}
