@@ -13,11 +13,11 @@ export const CommentEdit = () => {
 
     useEffect(() => {
         if (commentId) {
-            getCommentById(commentId).then((comment) => {
+            getCommentById(parseInt(commentId)).then((comment) => {
                 setComment({
                     id: comment.id,
-                    post_id: comment.post_id,
-                    author: comment.author,
+                    post_id: comment.post.id,
+                    author: comment.author.id,
                     content: comment.content,
                     created_on: comment.created_on
                 })
@@ -37,15 +37,17 @@ export const CommentEdit = () => {
             window.alert('Please fill in comment field before submitting')
         } else {
             const newComment = {
-                post_id: comment.post_id,
-                author: comment.author,
+                id: comment.id,
+                post_id: comment.post.id,
+                author: comment.author.id,
                 content: comment.content,
-                created_on: comment.created_on
+                created_on: now.toISO()
             }
             editComment(newComment)
         }
     }
-    console.log(commentId)
+
+
     return (
         <>
             <h2>Edit Comment</h2>
@@ -62,7 +64,7 @@ export const CommentEdit = () => {
                 <button onClick={(event) => {
                     event.preventDefault()
                     handleSaveComment()
-                    history.push(`/posts/${comment.post_id}`)
+                    history.push(`/posts`)
                 }}>Update Comment</button>
             </form>
         </>
