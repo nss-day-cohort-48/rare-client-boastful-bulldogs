@@ -17,6 +17,7 @@ import { CommentProvider } from "./comments/CommentProvider";
 import { CommentList } from "./comments/CommentsList";
 import { ProfileProvider } from "./auth/AuthProvider"
 import { CommentForm } from "./comments/CommentForm";
+import { CommentEdit } from "./comments/CommentEdit";
 
 
 export const ApplicationViews = () => {
@@ -63,8 +64,8 @@ export const ApplicationViews = () => {
                   <CommentList />
                 </Route>
 
-                <Route path="/comments/edit/:postId(\d+)">
-                    <CommentForm />
+                <Route path="/comments/edit/:commentId(\d+)">
+                    <CommentEdit />
                 </Route>
               </CommentProvider>
             </PostProvider>

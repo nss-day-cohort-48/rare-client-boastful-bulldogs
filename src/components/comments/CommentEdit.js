@@ -3,35 +3,49 @@ import { useHistory, useParams } from "react-router"
 import { CommentContext } from "./CommentProvider"
 import { DateTime } from "luxon";
 
-export const CommentForm = () => {
+export const CommentEdit = () => {
     const { getCommentById, editComment } = useContext(CommentContext)
-    
+    const [comment, setComment] = useState([])
     const userId = localStorage.getItem("rare_user_id")
     const { commentId } = useParams()
     const history = useHistory()
     const now = DateTime.now()
 
+    useEffect(() => {
+        if (commentId) {
+            getCommentById(commentId).then((comment) => {
+                setComment({
+                    id: comment.id,
+                    post_id: comment.post_id,
+                    author: comment.author,
+                    content: comment.content,
+                    created_on: comment.created_on
+                })
+            })
+        }
+    }, [commentId])
+
     const handleControlledInputChange = (event) => {
-        const newComment =  {...comments}
+        const newComment =  {...comment}
         newComment[event.target.name] = event.target.value
-        setComments(newComment)
+        setComment(newComment)
     }
 
     const handleSaveComment = () => {
 
-        if (comments.content === "" ) {
+        if (comment.content === "" ) {
             window.alert('Please fill in comment field before submitting')
         } else {
             const newComment = {
-                post_id: parseInt(postId),
-                author: userId,
-                content: comments.content,
-                created_on: now.toISO()
+                post_id: comment.post_id,
+                author: comment.author,
+                content: comment.content,
+                created_on: comment.created_on
             }
-            createComment(newComment)
+            editComment(newComment)
         }
     }
-    
+    console.log(commentId)
     return (
         <>
             <h2>Edit Comment</h2>
@@ -41,15 +55,14 @@ export const CommentForm = () => {
                 <fieldset>
                 <div>
                     <label htmlFor="comment">Comment:</label>
-                    <input value={comments.content} type="content" id="content" name="content" onChange={handleControlledInputChange}/>
+                    <input value={comment.content} type="content" id="content" name="content" onChange={handleControlledInputChange}/>
                 </div>
                 </fieldset>
 
                 <button onClick={(event) => {
                     event.preventDefault()
                     handleSaveComment()
-                    // history.push(`/posts/${postId}`)
-                    window.location.reload()
+                    history.push(`/posts/${comment.post_id}`)
                 }}>Update Comment</button>
             </form>
         </>
