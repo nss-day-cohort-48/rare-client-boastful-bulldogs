@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import { CommentContext } from "./CommentProvider"
-
+import { DateTime } from "luxon";
 
 export const CommentForm = () => {
     const { createComment } = useContext(CommentContext)
 
     const [ comments, setComments ] = useState({
         post_id: 0,
-        author_id: 0,
+        author: "",
         content: "",
         created_on: ""
     })
     
-    const userId = parseInt(localStorage.getItem("rare_user_id"))
+    const userId = localStorage.getItem("rare_user_id")
     const { postId } = useParams()
     const history = useHistory()
+    const now = DateTime.now()
 
     const handleControlledInputChange = (event) => {
         const newComment =  {...comments}
@@ -30,18 +31,17 @@ export const CommentForm = () => {
         } else {
             const newComment = {
                 post_id: parseInt(postId),
-                author_id: userId,
+                author: userId,
                 content: comments.content,
-                created_on: new Date().toLocaleDateString()
+                created_on: now.toISODate()
             }
             createComment(newComment)
-            // .then(() => history.push(`/posts/${postId}`))
         }
     }
-
+    
     return (
         <>
-            <h1>New Comment</h1>
+            <h2>New Comment</h2>
 
             <form className="flex comments">
         
@@ -55,7 +55,8 @@ export const CommentForm = () => {
                 <button onClick={(event) => {
                     event.preventDefault()
                     handleSaveComment()
-                    history.push(`/posts/${postId}`)
+                    // history.push(`/posts/${postId}`)
+                    window.location.reload()
                 }}>Save Comment</button>
             </form>
         </>

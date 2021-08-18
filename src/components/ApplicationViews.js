@@ -14,7 +14,7 @@ import { CategoryForm } from "./category/CategoryForm";
 import { TagsList } from "./tags/TagsList";
 import { TagsForm } from "./tags/TagsForm";
 import { CommentProvider } from "./comments/CommentProvider";
-import { CommentForm } from "./comments/CommentForm";
+import { CommentList } from "./comments/CommentsList";
 
 
 export const ApplicationViews = () => {
@@ -49,7 +49,7 @@ export const ApplicationViews = () => {
         </Route>
 
         <Route path="/comments/:postId(\d+)">
-            <CommentForm />
+            <CommentList />
         </Route>
 
         <Route exact path="/myposts">

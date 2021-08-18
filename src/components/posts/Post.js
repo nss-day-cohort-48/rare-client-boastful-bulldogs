@@ -38,22 +38,10 @@ export const Post = () => {
             <div>Date: {postDetail.publication_date}</div>
             <div>Category: {postDetail.category?.label}</div>
 
-            <h3>Comments</h3>
-            {
-              comments.map(comment => {
-                return (
-                  <>
-                  <div>{comment.user.first_name}</div>
-                  <div>{comment.content}</div>
-                  <br></br>
-                  </>
-                )
-              })
-            }
 
             <button onClick={() => {
               history.push(`/comments/${postId}`)
-            }}>Add Comment</button>
+            }}>View All Comments</button>
 
         </section>
       
