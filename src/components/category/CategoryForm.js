@@ -1,13 +1,15 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { CategoryContext } from "./CategoryProvider";
 import React, { useContext, useEffect, useState } from "react";
 
 export const CategoryForm = () => {
-  const { createCategory } = useContext(CategoryContext);
+  const { createCategory, getCategoryById, editCategory } =
+    useContext(CategoryContext);
   const history = useHistory();
-  const [category, setCategory] = useState({});
-  const [showNewCategoryField, setNewCateogyField] = useState(false);
-  const onClick = () => setNewCateogyField(!showNewCategoryField);
+  const { categoryId } = useParams();
+  const [category, setCategory] = useState({ label: "" });
+  const [showCategoryField, setCategoryField] = useState(false);
+  const onClick = () => setCategoryField(!showCategoryField);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleControlledInputChange = (event) => {
@@ -18,29 +20,49 @@ export const CategoryForm = () => {
 
   const handleSaveCategory = () => {
     setIsLoading(true);
-    createCategory({
-      label: category.label,
-    }).then(() => history.push("/categories"));
+    // eslint-disable-next-line no-lone-blocks
+    {
+      categoryId
+        ? editCategory({
+            id: parseInt(categoryId),
+            label: category.label,
+          }).then(() => history.push("/categories"))
+        : createCategory({
+            label: category.label,
+          }).then(() => history.push("/categories"));
+    }
   };
 
   useEffect(() => {
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    if (categoryId) {
+      getCategoryById(categoryId).then((category) => {
+        setCategory({
+          id: parseInt(categoryId),
+          label: category.label,
+        });
+      });
+    }
+  }, [categoryId]);
+
   return (
     <>
-      {showNewCategoryField ? (
+      {/* categoryId ? PASS IN PARAMS : another ternary for showing everything else */}
+      {categoryId ? (
         <form>
-          <h3>Create a New Category</h3>
+          <h3>Edit Category</h3>
           <fieldset>
             <div className="button_container">
               <input
                 type="text"
                 id="label"
                 name="label"
+                value={category.label}
                 required
                 autoFocus
-                placeholder="New Category Label"
                 onChange={handleControlledInputChange}
               />
             </div>
@@ -52,9 +74,7 @@ export const CategoryForm = () => {
               // disabled={isLoading}
               onClick={(event) => {
                 event.preventDefault();
-                handleSaveCategory();
-                // setCategory({});
-                onClick();
+                handleSaveCategory(category);
               }}
             >
               Save Category
@@ -63,7 +83,7 @@ export const CategoryForm = () => {
             <button
               className="button cancel_button"
               onClick={() => {
-                onClick();
+                history.push("/categories");
               }}
             >
               Cancel
@@ -72,15 +92,63 @@ export const CategoryForm = () => {
         </form>
       ) : (
         <>
-          <button
-            className="button cancel_button"
-            onClick={() => {
-              onClick();
-            }}
-          >
-            Create a New Category
-          </button>
-          <br></br>
+          {showCategoryField ? (
+            <>
+              <form>
+                <h3>Create a New Category</h3>
+                <fieldset>
+                  <div className="button_container">
+                    <input
+                      type="text"
+                      id="label"
+                      name="label"
+                      value={category.label}
+                      required
+                      autoFocus
+                      placeholder="New Category Label"
+                      onChange={handleControlledInputChange}
+                    />
+                  </div>
+                </fieldset>
+                {/* BUTTONS */}
+                <div>
+                  {/* SAVE BUTTON */}
+                  <button
+                    // disabled={isLoading}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setIsLoading(true);
+                      handleSaveCategory();
+                      onClick();
+                    }}
+                  >
+                    Save Category
+                  </button>
+                  {/* CANCEL BUTTON */}
+                  <button
+                    className="button cancel_button"
+                    onClick={() => {
+                      onClick();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </>
+          ) : (
+            <>
+              <button
+                className="button cancel_button"
+                onClick={() => {
+                  onClick();
+                }}
+              >
+                Create a New Category
+              </button>
+              <br></br>
+            </>
+          )}
         </>
       )}
     </>

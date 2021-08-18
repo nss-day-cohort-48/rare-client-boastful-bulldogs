@@ -73,6 +73,10 @@ export const ApplicationViews = () => {
           <Route exact path="/categories/create">
             <CategoryForm />
           </Route>
+
+          <Route path="/categories/edit/:categoryId(\d+)">
+            <CategoryForm />
+          </Route>
         </CategoryProvider>
 
         {/* Tag Manager */}
