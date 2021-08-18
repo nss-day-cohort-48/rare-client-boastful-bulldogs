@@ -6,7 +6,7 @@ import { ProfileContext } from "../auth/AuthProvider.js";
 import "./Category.css";
 
 export const CategoriesList = () => {
-  const { category, categories, getAllCategories, deleteCategory } =
+  const { categories, getAllCategories, deleteCategory } =
     useContext(CategoryContext);
   const history = useHistory();
   const { profile, getProfile } = useContext(ProfileContext);
@@ -16,7 +16,7 @@ export const CategoriesList = () => {
     getProfile();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const sortedcategories = [...categories].sort((a, b) => {
+  const sortedCategories = [...categories].sort((a, b) => {
     return a.label.localeCompare(b.label);
   });
 
@@ -34,12 +34,21 @@ export const CategoriesList = () => {
       <br></br>
       {profile.user?.is_staff ? <CategoryForm /> : ""}
       <br></br>
-      {sortedcategories.map((category) => {
+      {sortedCategories.map((category) => {
         return (
           <>
             <div>ID: {category.id}</div>
             <div>Label: {category.label}</div>
-            <button>Edit Category</button>
+            {profile.user?.is_staff ? (
+              <button
+                onClick={() => history.push(`/categories/edit/${category.id}`)}
+              >
+                Edit Category
+              </button>
+            ) : (
+              ""
+            )}
+            {/* <button>Edit Category</button> */}
             {/* <button onClick={() => handleDelete(category.id)}> */}
             {profile.user?.is_staff ? (
               <button onClick={() => handleDelete(category.id)}>

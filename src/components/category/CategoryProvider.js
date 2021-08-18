@@ -48,12 +48,11 @@ export const CategoryProvider = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        headers: {
-          Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-        },
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
       body: JSON.stringify(category),
-    }).then(getAllCategories);
+    });
+    // .then(getAllCategories);
   };
 
   return (
