@@ -13,6 +13,8 @@ import { TagsProvider } from "./tags/TagsProvider";
 import { CategoryForm } from "./category/CategoryForm";
 import { TagsList } from "./tags/TagsList";
 import { TagsForm } from "./tags/TagsForm";
+import { CommentProvider } from "./comments/CommentProvider";
+import { CommentList } from "./comments/CommentsList";
 import { ProfileProvider } from "./auth/AuthProvider"
 
 
@@ -31,6 +33,7 @@ export const ApplicationViews = () => {
       <TagsProvider>
       <CategoryProvider>
       <PostProvider>
+      <CommentProvider>
         <Route exact path="/posts">
             <PostList/>
         </Route>
@@ -47,6 +50,10 @@ export const ApplicationViews = () => {
             <PostEdit />
         </Route>
 
+        <Route path="/comments/:postId(\d+)">
+            <CommentList />
+        </Route>
+
         <Route exact path="/myposts">
           <MyPostList />
         </Route>
@@ -54,6 +61,7 @@ export const ApplicationViews = () => {
         <Route exact path="/myposts/:postId(\d+)">
           <MyPost />
         </Route>
+      </CommentProvider>
       </PostProvider>
       </CategoryProvider>
       </TagsProvider>
