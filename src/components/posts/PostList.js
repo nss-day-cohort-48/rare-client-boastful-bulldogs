@@ -35,7 +35,7 @@ export const PostList = () => {
                         <div className="post-list">
                             <div>
                                 <div>Title: <Link className="title_link" onClick={() => {handlePostClick(post.id)}}>{post.title}</Link></div>
-                                <div>Author: {post.user.first_name} {post.user.last_name}</div>
+                                <div>Author: {post.user.full_name} {post.user.last_name}</div>
                                 <div>Category: {post.category.label}</div>
                             </div>
                         </div>
