@@ -87,7 +87,7 @@ export const TagsForm = () => {
             <button
               className="button cancel_button"
               onClick={() => {
-                onClick();
+                history.push("/tags");
               }}
             >
               Cancel
@@ -122,9 +122,9 @@ export const TagsForm = () => {
                     onClick={(event) => {
                       event.preventDefault();
                       setIsLoading(true);
-                      addTag({
-                        label: tag.label,
-                      }).then(() => history.push("/tags"));
+                      handleSaveTag();
+                      //   label: tag.label,
+                      // }).then(() => history.push("/tags"));
                       // setTag({});
                       onClick();
                     }}

@@ -21,9 +21,8 @@ export const TagsProvider = (props) => {
       headers: {
         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
-    })
-      .then((res) => res.json())
-      // .then(setTag);
+    }).then((res) => res.json());
+    // .then(setTag);
   };
 
   const addTag = (newTagObj) => {
@@ -56,7 +55,8 @@ export const TagsProvider = (props) => {
         },
       },
       body: JSON.stringify(tag),
-    }).then(getAllTags);
+    });
+    // .then(getAllTags);
   };
 
   return (
