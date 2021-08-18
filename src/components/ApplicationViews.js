@@ -15,7 +15,10 @@ import { TagsList } from "./tags/TagsList";
 import { TagsForm } from "./tags/TagsForm";
 import { CommentProvider } from "./comments/CommentProvider";
 import { CommentList } from "./comments/CommentsList";
-import { ProfileProvider } from "./auth/AuthProvider";
+import { ProfileProvider } from "./auth/AuthProvider"
+import { CommentForm } from "./comments/CommentForm";
+import { CommentEdit } from "./comments/CommentEdit";
+
 
 export const ApplicationViews = () => {
   return (
@@ -49,16 +52,20 @@ export const ApplicationViews = () => {
                   <PostEdit />
                 </Route>
 
-                <Route path="/comments/:postId(\d+)">
-                  <CommentList />
-                </Route>
-
                 <Route exact path="/myposts">
                   <MyPostList />
                 </Route>
 
                 <Route exact path="/myposts/:postId(\d+)">
                   <MyPost />
+                </Route>
+
+                <Route path="/comments/:postId(\d+)">
+                  <CommentList />
+                </Route>
+
+                <Route path="/comments/edit/:commentId(\d+)">
+                    <CommentEdit />
                 </Route>
               </CommentProvider>
             </PostProvider>

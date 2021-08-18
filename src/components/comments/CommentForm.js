@@ -33,7 +33,7 @@ export const CommentForm = () => {
                 post_id: parseInt(postId),
                 author: userId,
                 content: comments.content,
-                created_on: now.toISODate()
+                created_on: now.toISO()
             }
             createComment(newComment)
         }

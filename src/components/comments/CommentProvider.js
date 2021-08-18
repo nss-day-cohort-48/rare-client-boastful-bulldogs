@@ -16,6 +16,15 @@ export const CommentProvider = (props) => {
         .then((data) => setComments(data))
     }
 
+    const getCommentById = commentId => {
+        return fetch(`http://localhost:8000/comments/${commentId}`, {
+            headers: {
+                Authorization: `Token ${localStorage.getItem("rare_user_id")}`
+            },
+        })
+        .then(res => res.json())
+    }
+
     const getCommentsByPostId = postId => {
         return fetch(`http://localhost:8000/comments?postId=${postId}`, {
             headers: {
@@ -48,12 +57,25 @@ export const CommentProvider = (props) => {
         .then()
     }
 
+    const editComment = comment => {
+        return fetch(`http://localhost:8000/comments/${comment.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${localStorage.getItem("rare_user_id")}`
+        },
+        body: JSON.stringify(comment),
+        })
+        .then()
+    }
+
 
     return (
         <CommentContext.Provider value= {
             {
                 getCommentsByPostId, createComment,
-                comments, getAllComments, deleteComment
+                comments, getAllComments, deleteComment,
+                getCommentById, editComment
             }
         }>
             {props.children}
