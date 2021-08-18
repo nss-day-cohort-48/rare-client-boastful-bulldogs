@@ -36,14 +36,7 @@ export const CommentEdit = () => {
         if (comment.content === "" ) {
             window.alert('Please fill in comment field before submitting')
         } else {
-            const newComment = {
-                id: comment.id,
-                post_id: comment.post.id,
-                author: comment.author.id,
-                content: comment.content,
-                created_on: now.toISO()
-            }
-            editComment(newComment)
+            editComment(comment)
         }
     }
 
@@ -64,7 +57,7 @@ export const CommentEdit = () => {
                 <button onClick={(event) => {
                     event.preventDefault()
                     handleSaveComment()
-                    history.push(`/posts`)
+                    history.push(`/comments/${comment.post_id}`)
                 }}>Update Comment</button>
             </form>
         </>
