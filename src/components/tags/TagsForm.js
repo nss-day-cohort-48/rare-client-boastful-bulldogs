@@ -49,7 +49,7 @@ export const TagsForm = () => {
 
   return (
     <>
-      {/* tagId ? PASS IN PARAMS : show everything else */}
+      {/* tagId ? PASS IN PARAMS : another ternary for showing everything else */}
       {tagId ? (
         <form>
           <h3>Edit Tag</h3>
@@ -74,11 +74,6 @@ export const TagsForm = () => {
               onClick={(event) => {
                 event.preventDefault();
                 handleSaveTag(tag);
-                // const editedTag = {
-                //   label: tag.label,
-                // };
-                // editTag(editedTag).then(() => history.push("/tags"));
-                onClick();
               }}
             >
               Save Tag
@@ -123,9 +118,6 @@ export const TagsForm = () => {
                       event.preventDefault();
                       setIsLoading(true);
                       handleSaveTag();
-                      //   label: tag.label,
-                      // }).then(() => history.push("/tags"));
-                      // setTag({});
                       onClick();
                     }}
                   >

@@ -84,6 +84,10 @@ export const ApplicationViews = () => {
           <Route exact path="/tags/create">
             <TagsForm />
           </Route>
+
+          <Route path="/tags/edit/:tagId(\d+)">
+            <TagsForm />
+          </Route>
         </TagsProvider>
       </ProfileProvider>
     </>

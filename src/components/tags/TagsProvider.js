@@ -50,13 +50,11 @@ export const TagsProvider = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        headers: {
-          Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-        },
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
       body: JSON.stringify(tag),
     });
-    // .then(getAllTags);
+    // .then(setTag(tag));
   };
 
   return (
