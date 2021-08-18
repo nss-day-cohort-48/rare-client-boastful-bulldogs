@@ -2,14 +2,14 @@ import React, { useEffect, useContext } from "react";
 import { CategoryContext } from "./CategoryProvider";
 import { CategoryForm } from "./CategoryForm";
 import { useHistory } from "react-router-dom";
-import { ProfileContext } from "../auth/AuthProvider.js"
+import { ProfileContext } from "../auth/AuthProvider.js";
 import "./Category.css";
 
 export const CategoriesList = () => {
   const { category, categories, getAllCategories, deleteCategory } =
     useContext(CategoryContext);
   const history = useHistory();
-  const { profile, getProfile } = useContext(ProfileContext)
+  const { profile, getProfile } = useContext(ProfileContext);
 
   useEffect(() => {
     getAllCategories();
@@ -39,9 +39,15 @@ export const CategoriesList = () => {
           <>
             <div>ID: {category.id}</div>
             <div>Label: {category.label}</div>
-            {profile.user?.is_staff ? <button onClick={() => handleDelete(category.id)}>
-              Delete category
-            </button> : ""}
+            <button>Edit Category</button>
+            {/* <button onClick={() => handleDelete(category.id)}> */}
+            {profile.user?.is_staff ? (
+              <button onClick={() => handleDelete(category.id)}>
+                Delete category
+              </button>
+            ) : (
+              ""
+            )}
           </>
         );
       })}
