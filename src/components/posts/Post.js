@@ -34,7 +34,7 @@ export const Post = () => {
             <h2>Title: {postDetail.title}</h2>
             <img src={postDetail.image_url} alt="header" />
             <div>{postDetail.content}</div>
-            <div>Author: {postDetail.user?.first_name} {postDetail.user?.last_name}</div>
+            <div>Author: {postDetail.user?.full_name}</div>
             <div>Date: {postDetail.publication_date}</div>
             <div>Category: {postDetail.category?.label}</div>
 
