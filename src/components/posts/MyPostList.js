@@ -5,13 +5,13 @@ import "./Post.css"
 
 
 export const MyPostList = () => {
-    const { posts, getPostsByUserId, getPostById, deleteMyPost } = useContext(PostContext)
-    const userId = parseInt(localStorage.getItem("rare_user_id"))
+    const { posts, getAllPosts, getPostsByUserId, getPostById, deleteMyPost } = useContext(PostContext)
+    // const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
     
     useEffect(() => {
-        getPostsByUserId(userId)
+        getAllPosts()
     }, [])
     
     const sortedPosts = posts.sort((a, b) => {
@@ -29,11 +29,11 @@ export const MyPostList = () => {
             <h1 className="post-title">My Posts</h1>
 
             {
-                sortedPosts.map(post => {
+                sortedPosts.filter(p => p.owner).map(post => {
                     return (
                         <>
                         <div className="post-list">
-                            {userId === post.user_id 
+                            { post.owner
                             ?
                             <div className="post-buttons">
                                 <button className="post-button" onClick={() => history.push(`/posts/edit/${post.id}`)}>Edit</button>
