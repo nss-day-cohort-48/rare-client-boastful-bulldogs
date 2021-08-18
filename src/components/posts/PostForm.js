@@ -86,7 +86,7 @@ export const PostForm = () => {
     // debugger
     let newPost = {
         user_id: parseInt(userId),
-        category_id: post.category_id,
+        categoryId: post.category_id,
         title: post.title,
         publication_date: now.toISODate(),
         image_url: post.image_url,
