@@ -37,7 +37,7 @@ export const Post = () => {
             <div>Author: {postDetail.user?.full_name}</div>
             <div>Date: {postDetail.publication_date}</div>
             <div>Category: {postDetail.category?.label}</div>
-
+            <div>Tags: {postDetail.tags?.map((t) => <li>{t.label}</li>)}</div>
 
             <button onClick={() => {
               history.push(`/comments/${postId}`)
