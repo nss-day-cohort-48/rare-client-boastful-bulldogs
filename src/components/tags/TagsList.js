@@ -6,7 +6,7 @@ import { ProfileContext } from "../auth/AuthProvider.js";
 import { useHistory } from "react-router-dom";
 
 export const TagsList = () => {
-  const { tag, tags, getAllTags, deleteTag } = useContext(TagsContext);
+  const {  tags, getAllTags, deleteTag } = useContext(TagsContext);
   const history = useHistory();
   const { profile, getProfile } = useContext(ProfileContext);
 
