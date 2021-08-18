@@ -13,6 +13,7 @@ import { TagsProvider } from "./tags/TagsProvider";
 import { CategoryForm } from "./category/CategoryForm";
 import { TagsList } from "./tags/TagsList";
 import { TagsForm } from "./tags/TagsForm";
+import { ProfileProvider } from "./auth/AuthProvider";
 
 export const ApplicationViews = () => {
   return (
@@ -25,65 +26,68 @@ export const ApplicationViews = () => {
       ></main>
 
       {/* Render Posts */}
-      <TagsProvider>
+
+      <ProfileProvider>
+        <TagsProvider>
+          <CategoryProvider>
+            <PostProvider>
+              <Route exact path="/posts">
+                <PostList />
+              </Route>
+
+              <Route exact path="/newpost">
+                <PostForm />
+              </Route>
+
+              <Route exact path="/posts/:postId(\d+)">
+                <Post />
+              </Route>
+
+              <Route path="/posts/edit/:postId(\d+)">
+                <PostEdit />
+              </Route>
+
+              <Route exact path="/myposts">
+                <MyPostList />
+              </Route>
+
+              <Route exact path="/myposts/:postId(\d+)">
+                <MyPost />
+              </Route>
+            </PostProvider>
+          </CategoryProvider>
+        </TagsProvider>
+
+        {/* Category Manager */}
         <CategoryProvider>
-          <PostProvider>
-            <Route exact path="/posts">
-              <PostList />
-            </Route>
+          <Route exact path="/categories">
+            <CategoriesList />
+          </Route>
 
-            <Route exact path="/newpost">
-              <PostForm />
-            </Route>
+          <Route exact path="/categories/create">
+            <CategoryForm />
+          </Route>
 
-            <Route exact path="/posts/:postId(\d+)">
-              <Post />
-            </Route>
-
-            <Route path="/posts/edit/:postId(\d+)">
-              <PostEdit />
-            </Route>
-
-            <Route exact path="/myposts">
-              <MyPostList />
-            </Route>
-
-            <Route exact path="/myposts/:postId(\d+)">
-              <MyPost />
-            </Route>
-          </PostProvider>
+          <Route path="/categories/edit/:categoryId(\d+)">
+            <CategoryForm />
+          </Route>
         </CategoryProvider>
-      </TagsProvider>
 
-      {/* Category Manager */}
-      <CategoryProvider>
-        <Route exact path="/categories">
-          <CategoriesList />
-        </Route>
+        {/* Tag Manager */}
+        <TagsProvider>
+          <Route exact path="/tags">
+            <TagsList />
+          </Route>
 
-        <Route exact path="/categories/create">
-          <CategoryForm />
-        </Route>
+          <Route exact path="/tags/create">
+            <TagsForm />
+          </Route>
 
-        <Route path="/categories/edit/:categoryId(\d+)">
-          <CategoryForm />
-        </Route>
-      </CategoryProvider>
-
-      {/* Tag Manager */}
-      <TagsProvider>
-        <Route exact path="/tags">
-          <TagsList />
-        </Route>
-
-        <Route exact path="/tags/create">
-          <TagsForm />
-        </Route>
-
-        <Route path="/tags/edit/:tagId(\d+)">
-          <TagsForm />
-        </Route>
-      </TagsProvider>
+          <Route path="/tags/edit/:tagId(\d+)">
+            <TagsForm />
+          </Route>
+        </TagsProvider>
+      </ProfileProvider>
     </>
   );
 };
