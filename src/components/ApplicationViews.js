@@ -15,6 +15,7 @@ import { TagsList } from "./tags/TagsList";
 import { TagsForm } from "./tags/TagsForm";
 import { CommentProvider } from "./comments/CommentProvider";
 import { CommentList } from "./comments/CommentsList";
+import { ProfileProvider } from "./auth/AuthProvider"
 
 
 export const ApplicationViews = () => {
@@ -28,6 +29,7 @@ export const ApplicationViews = () => {
       ></main>
 
         {/* Render Posts */}
+      <ProfileProvider>
       <TagsProvider>
       <CategoryProvider>
       <PostProvider>
@@ -84,6 +86,8 @@ export const ApplicationViews = () => {
           <TagsForm />
         </Route>
       </TagsProvider>
+      </ProfileProvider>
+
     </>
   );
 };
