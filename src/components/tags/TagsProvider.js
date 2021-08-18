@@ -16,14 +16,14 @@ export const TagsProvider = (props) => {
       .then((data) => setTags(data)); // updates state with tags from server
   };
 
-  const getTagById = (tag_id) => {
-    return fetch(`http://localhost:8000/tags/${tag_id}`, {
+  const getTagById = (tagId) => {
+    return fetch(`http://localhost:8000/tags/${tagId}`, {
       headers: {
         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
     })
       .then((res) => res.json())
-      .then(setTag);
+      // .then(setTag);
   };
 
   const addTag = (newTagObj) => {

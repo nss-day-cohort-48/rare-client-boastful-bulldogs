@@ -7,8 +7,8 @@ export const TagsForm = () => {
   const history = useHistory();
   const { tagId } = useParams();
   const [tag, setTag] = useState({ label: "" });
-  const [showNewTagField, setNewTagField] = useState(false);
-  const onClick = () => setNewTagField(!showNewTagField);
+  const [showTagField, setTagField] = useState(false);
+  const onClick = () => setTagField(!showTagField);
   const [isLoading, setIsLoading] = useState(true);
 
   const handleControlledInputChange = (event) => {
@@ -18,25 +18,34 @@ export const TagsForm = () => {
   };
 
   useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
     if (tagId) {
       getTagById(tagId).then((tag) => {
         setTag({
+          id: parseInt(tagId),
           label: tag.label,
         });
       });
     }
   }, [tagId]);
 
-  // const handleSaveTag = () => {
-  //   setIsLoading(true);
-  //   addTag({
-  //     label: tag.label,
-  //   }).then(() => history.push("/tags"));
-  // };
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
+  const handleSaveTag = () => {
+    setIsLoading(true);
+    // eslint-disable-next-line no-lone-blocks
+    {
+      tagId
+        ? editTag({
+            id: parseInt(tagId),
+            label: tag.label,
+          }).then(() => history.push("/tags"))
+        : addTag({
+            label: tag.label,
+          }).then(() => history.push("/tags"));
+    }
+  };
 
   return (
     <>
@@ -50,6 +59,7 @@ export const TagsForm = () => {
                 type="text"
                 id="label"
                 name="label"
+                value={tag.label}
                 required
                 autoFocus
                 onChange={handleControlledInputChange}
@@ -63,10 +73,11 @@ export const TagsForm = () => {
               // disabled={isLoading}
               onClick={(event) => {
                 event.preventDefault();
-                const editedTag = {
-                  label: tag.label,
-                };
-                editTag(editedTag).then(() => history.push("/tags"));
+                handleSaveTag(tag);
+                // const editedTag = {
+                //   label: tag.label,
+                // };
+                // editTag(editedTag).then(() => history.push("/tags"));
                 onClick();
               }}
             >
@@ -85,7 +96,7 @@ export const TagsForm = () => {
         </form>
       ) : (
         <>
-          {showNewTagField ? (
+          {showTagField ? (
             <>
               <form>
                 <h3>Create a New Tag</h3>
@@ -95,6 +106,7 @@ export const TagsForm = () => {
                       type="text"
                       id="label"
                       name="label"
+                      value={tag.label}
                       required
                       autoFocus
                       placeholder="New Tag Label"
