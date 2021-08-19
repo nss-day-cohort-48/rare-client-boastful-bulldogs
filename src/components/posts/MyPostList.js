@@ -1,15 +1,16 @@
 import React, { useEffect, useContext } from "react"
 import { PostContext } from "./PostProvider"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useParams } from "react-router-dom"
 import "./Post.css"
 
 
 export const MyPostList = () => {
-    const { posts, getAllPosts, getPostsByUserId, getPostById, deleteMyPost } = useContext(PostContext)
+    const { posts, getAllPosts, getPostsByUserId, getPostById, deletePost } = useContext(PostContext)
     // const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
-    
+    const { postId } = useParams()
+
     useEffect(() => {
         getAllPosts()
     }, [])
@@ -22,7 +23,11 @@ export const MyPostList = () => {
         getPostById(id)
         .then(() => history.push(`/myposts/${id}`))
     }
-    
+    const handleDelete = (postId) => {
+        deletePost(parseInt(postId))
+        // .then(getPostsByUserId(userId))
+        .then(history.push("/myposts"))
+      }
     
     return (
         <>
@@ -37,7 +42,9 @@ export const MyPostList = () => {
                             ?
                             <div className="post-buttons">
                                 <button className="post-button" onClick={() => history.push(`/posts/edit/${post.id}`)}>Edit</button>
+                                <button className="post-button" onClick={() => handleDelete(post.id)}>Delete</button>
                             </div>
+                            
                             : 
                             <><div className="post-buttons"></div></>
                             }

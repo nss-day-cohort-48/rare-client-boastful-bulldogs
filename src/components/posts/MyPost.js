@@ -5,7 +5,7 @@ import { PostContext } from "./PostProvider"
 import { HumanDate } from "../utils/HumanDate"
 
 export const MyPost = () => {
-  const { getPostById, deleteMyPost, getPostsByUserId } = useContext(PostContext)
+  const { getPostById, deletePost, getPostsByUserId } = useContext(PostContext)
   const userId = parseInt(localStorage.getItem("rare_user_id"))
  
   const history = useHistory()
@@ -18,9 +18,9 @@ export const MyPost = () => {
         .then((data) => setPostDetail(data))
   }, [])
 
-  const handleDelete = () => {
-    deleteMyPost(parseInt(postId))
-    .then(getPostsByUserId(userId))
+  const handleDelete = (postId) => {
+    deletePost(parseInt(postId))
+    // .then(getPostsByUserId(userId))
     .then(history.push("/myposts"))
   }
   
@@ -32,20 +32,18 @@ export const MyPost = () => {
               <div>Title: {postDetail.title}</div>
               <img src={postDetail.image_url} alt="header" />
               <div>{postDetail.content}</div>
-              <div>Author: {postDetail.user?.first_name} {postDetail.user?.last_name}</div>
+              <div>Author: {postDetail.user?.full_name}</div>
               <div>Date: {postDetail.publication_date}</div>
               <div>Category: {postDetail.category?.label}</div>
+              <div>Tags: {postDetail.tags?.map((t) => <li>{t.label}</li>)}</div>
             </div>
             <div>
-            {userId === postDetail.user_id 
-            ?
+            
             <div className="post-buttons">
                 <button className="post-button" onClick={() => history.push(`/posts/edit/${postDetail.id}`)}>Edit</button>
                 <button className="post-button" onClick={handleDelete}>Delete</button>
             </div>
-            : 
-            <><div className="post-buttons"></div></>
-            }
+            
             </div>
         </section>
 
