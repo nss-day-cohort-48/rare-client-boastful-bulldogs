@@ -1,11 +1,12 @@
 import React, { useEffect, useContext } from "react"
 import { PostContext } from "./PostProvider"
 import { Link, useHistory } from "react-router-dom"
+import Swal from "sweetalert2"
 import "./Post.css"
 
 
 export const PostList = () => {
-    const { posts, getAllPosts, getPostById } = useContext(PostContext)
+    const { posts, getAllPosts, getPostById, deletePost } = useContext(PostContext)
     const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
@@ -21,9 +22,28 @@ export const PostList = () => {
     const handlePostClick = (id) => {
         getPostById(id)
         .then(() => history.push(`/posts/${id}`))
-      }
+    }
 
-    
+    const handleDeleteModal= (postId) => {
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to undo!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Ah, cancel"
+        }).then((result) => {
+        if (result.isConfirmed) {
+            deletePost(postId).then(() => {
+            Swal.fire(
+                "Deleted!",
+                "Your post has been deleted.",
+                "Success!"
+            ).then(getPostById(parseInt(postId)))
+            })
+        }; 
+    })
+    };
     return (
         <>
             <h1 className="post-title">All Posts</h1>
@@ -39,6 +59,12 @@ export const PostList = () => {
                                 <div>Category: {post.category.label}</div>
                             </div>
                         </div>
+<div>
+<button onClick={() => 
+                    {handleDeleteModal(post.id)}} className="button is-rounded remove">Delete
+                    <img className="trashIconPic" src="https://img.icons8.com/material/24/000000/trash--v1.png"/></button>
+                    
+</div>
                         </>
                     )
                 })
