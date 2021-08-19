@@ -26,14 +26,16 @@ export const PostEdit = () => {
   const [post, setPost] = useState({
     id: parseInt(postId),
     user_id: parseInt(userId),
-    category_id: 1,
+    category: 0,
     title: "",
     publication_date: "",
     image_url: "",
     content: "",
     approved: 0,
-    tag_id: 0
+    tags: []
   })
+
+  const [postTags, setPostTags] = useState([])
 
   const [pic, setPic] =useState({
     file: "",
@@ -41,9 +43,22 @@ export const PostEdit = () => {
   
   useEffect(() => {
       getAllCategories()
+      getAllTags()
       getPostById(postId)
       .then(post =>{
-          setPost(post)
+          setPost({
+            id: post.id,
+            category: post.category.id,
+            title: post.title,
+            publication_date: post.publication_date,
+            image_url: post.image_url,
+            content: post.content,
+            approved: post.approved,
+            tags: post.tags
+          })
+          setPostTags(post.tags)
+          // console.log("post", post)
+          // console.log("postTags", post.tags)
       })
   }, [])
 
@@ -79,7 +94,9 @@ export const PostEdit = () => {
 
   const handleAdd = (e) => {
     setIsLoading(true)
-    // debugger
+    let newTags = []
+    debugger
+    postTags.forEach(t => newTags.push(t.id))
     let newPost = {
         id: parseInt(postId,),
         user_id: parseInt(userId),
@@ -88,7 +105,8 @@ export const PostEdit = () => {
         publication_date: post.publication_date,
         image_url: post.image_url,
         content: post.content,
-        approved: 0
+        approved: 0,
+        tags: newTags
     }
     // const data = new FormData()
     // data.append("file", pic.file[0])
@@ -100,7 +118,7 @@ export const PostEdit = () => {
     updatePost(newPost)
         .then(() => history.push(`/myposts`))    
   }
-
+  console.log("post",post)
   return (
     <div className="postForm__Container">
     <form className="postForm">
@@ -120,8 +138,8 @@ export const PostEdit = () => {
       <div className="postFormFlex">
       <fieldset className="postInputField">
           <div className="form-group post-category-field">
-            <InputLabel htmlFor="category">Categories:</InputLabel>
-            <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category_id} onChange={handleControlledCategoryChange}>
+            <InputLabel htmlFor="category">Category:</InputLabel>
+            <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category} onChange={handleControlledCategoryChange}>
               <option value="">Select</option>
                 {categories.map(c => (
                 <MenuItem key={c.id} value={c.id}>
@@ -137,12 +155,35 @@ export const PostEdit = () => {
             <Input  margin="dense"type="text" id="image_url" className="SearchForm-control" placeholder="image URL" value={post.image_url} onChange={handleControlledInputChange} />
           </div>
         </fieldset>
-      <fieldset  className="postInputField">
+      {/* <fieldset  className="postInputField">
         {tags.map(t => (<FormControlLabel
         control={<Checkbox checked={post.tag_id} onChange={handleControlledCheckChange} name="checkedA" />}
         label={t.label}
       />))}
-      </fieldset>
+      </fieldset> */}
+      <fieldset>
+                <div>
+                    {tags.map(p => (
+                        <>
+                        <input type="checkbox" key={p.id}
+                        value={p.id} onClick={event => {
+                        const copyPostTags = [...postTags]
+                        const foundIndex = copyPostTags.findIndex(postTag => postTag.id === p.id)
+                        if (foundIndex >= 0) {
+                            copyPostTags.splice(foundIndex, 1)
+                        }
+                        else {
+                            copyPostTags.push(p)
+                        }
+                        setPostTags(copyPostTags)
+                        }}
+                        checked={
+                            postTags?.some((gameCategory) => {
+                                return gameCategory.id === p.id
+                            })
+                        }/>{p.label}</>))}
+                </div>
+            </fieldset>
       <div className="postButton-flex">
       <Button variant="contained" color="primary" className="btn btn-primary"
           // disabled={isLoading}
