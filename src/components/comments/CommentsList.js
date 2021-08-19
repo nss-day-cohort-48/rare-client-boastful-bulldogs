@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom"
 import { PostContext } from "../posts/PostProvider"
 import { CommentContext } from "../comments/CommentProvider"
 import { CommentForm } from "./CommentForm"
+import Swal from "sweetalert2"
 import "./Comments.css"
 
 
@@ -29,9 +30,30 @@ export const CommentList = () => {
     return b.created_on.localeCompare(a.created_on);
   });
 
-  const handleDelete = (commentId) => {
-    deleteComment(commentId).then(window.location.reload());
-  };
+  // const handleDelete = (commentId) => {
+  //   deleteComment(commentId).then(window.location.reload());
+  // };
+
+  const handleDeleteCard = (commentId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to undo!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Ah, cancel"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteComment(commentId).then(() => {
+          Swal.fire(
+            "Deleted!",
+            "Your comment has been deleted.",
+            "Success!"
+          ).then(getCommentsByPostId(parseInt(postId)))
+        })
+      }; 
+  })
+};
 
 
   return (
@@ -58,22 +80,14 @@ export const CommentList = () => {
                 <div>Date created: {comment.created_on}</div>
                 {comment.owner ? (
                   <div>
-                    <button
-                      className="comment-btn"
-                      onClick={() => {
-                        handleDelete(comment.id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="comment-btn"
-                      onClick={() => {
+                    <button onClick={() => 
+                      {handleDeleteCard(comment.id)}} className="button is-rounded remove">Delete
+                      <img className="trashIconPic" src="https://img.icons8.com/material/24/000000/trash--v1.png"/></button>
+                    {/* <button className="comment-btn" onClick={() => {
+                        handleDelete(comment.id)}}>Delete</button> */}
+                    <button className="comment-btn" onClick={() => {
                         history.push(`/comments/edit/${comment.id}`)
-                      }}
-                    >
-                      Edit
-                    </button>
+                      }}> Edit </button>
                   </div>
                 ) : (
                   <></>
