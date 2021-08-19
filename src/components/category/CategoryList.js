@@ -32,7 +32,7 @@ export const CategoriesList = () => {
     <>
       <h1>All Categories</h1>
       <br></br>
-      {profile.user?.is_staff ? <CategoryForm /> : ""}
+      <CategoryForm />
       <br></br>
       {sortedCategories.map((category) => {
         return (
