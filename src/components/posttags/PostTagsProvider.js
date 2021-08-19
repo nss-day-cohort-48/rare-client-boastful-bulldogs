@@ -15,7 +15,7 @@ export const PostTagsProvider = (props) => {
       .then((data) => setPostTags(data));
   };
 
-  const getTagsByPostId = (postId) => {
+  const getPostTagsByPostId = (postId) => {
     return fetch(`http://localhost:8000/postTags?postId=${postId}`, {
       headers: {
         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
@@ -59,7 +59,7 @@ export const PostTagsProvider = (props) => {
   return (
     <PostTagsContext.Provider
       value={{
-        getTagsByPostId,
+        getPostTagsByPostId,
         postTags,
         getAllPostTags,
         editPostTag,

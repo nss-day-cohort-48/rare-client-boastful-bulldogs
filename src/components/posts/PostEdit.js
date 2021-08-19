@@ -15,6 +15,7 @@ export const PostEdit = () => {
   const { updatePost, getPostById } = useContext(PostContext);
   const { categories, getAllCategories } = useContext(CategoryContext);
   const { tags, getAllTags } = useContext(TagsContext);
+  const { postTags, setPostTags } = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const userId = localStorage.getItem("rare_user_id");
   const history = useHistory();
@@ -32,7 +33,7 @@ export const PostEdit = () => {
     image_url: "",
     content: "",
     approved: 0,
-    tag_id: [],
+    tags: [],
   });
 
   const [pic, setPic] = useState({
@@ -42,10 +43,15 @@ export const PostEdit = () => {
   useEffect(() => {
     getAllCategories();
     getAllTags();
+  }, []);
+
+  useEffect(() => {
     getPostById(postId).then((post) => {
       setPost(post);
+      console.log("This post:", post);
+      // setPostTags(post.tags);
     });
-  }, []);
+  }, [postId]);
 
   const handleControlledInputChange = (e) => {
     setIsLoading(false);
@@ -186,6 +192,38 @@ export const PostEdit = () => {
             ))}
           </fieldset>
           {/* ------------------- OLD ABOVE, NEW BELOW ------------------- */}
+          <fieldset>
+            <div>
+              {tags.map((tag) => (
+                <>
+                  <input
+                    type="checkbox"
+                    key={tag.id}
+                    value={tag.id}
+                    onClick={(event) => {
+                      const copyPostTags = [...postTags];
+                      console.log("Thunduhhh", post.tags);
+                      const foundIndex = copyPostTags.findIndex(
+                        (postTag) => postTag.id === tag.id
+                      );
+                      if (foundIndex >= 0) {
+                        copyPostTags.splice(foundIndex, 1);
+                      } else {
+                        copyPostTags.push(tag);
+                      }
+                      setPostTags(copyPostTags);
+                    }}
+                    checked={postTags?.some((postTag) => {
+                      return postTag.id === tag.id;
+                    })}
+                  />
+                  {tag.label}
+                </>
+              ))}
+            </div>
+          </fieldset>
+          {/* ------------------- NEW ABOVE ------------------- */}
+
           <div className="postButton-flex">
             <Button
               variant="contained"
