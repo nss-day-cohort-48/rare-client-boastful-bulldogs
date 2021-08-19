@@ -27,7 +27,7 @@ export const TagsList = () => {
     <>
       <h1>All Tags</h1>
       <br></br>
-      {profile.user?.is_staff ? <TagsForm /> : ""}
+      <TagsForm />
       <br></br>
       {sortedTags.map((tag) => {
         return (
