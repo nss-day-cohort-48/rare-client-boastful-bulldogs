@@ -1,11 +1,18 @@
-import React from "react"
+import React, { useEffect, useContext} from "react"
 import { Link, useHistory } from "react-router-dom"
 import "./NavBar.css"
 import Logo from "./rare.jpeg"
+import { ProfileContext } from "../auth/AuthProvider.js";
 
 export const NavBar = () => {
     const history = useHistory()
     const userId = localStorage.getItem("rare_user_id")
+    // const { profile, getProfile } = useContext(ProfileContext)
+
+    // useEffect(() => {
+        
+    //     getProfile()
+    // }, [])
 
     return (
         <ul className="navbar">
@@ -48,6 +55,14 @@ export const NavBar = () => {
                 :
                 <Link className="navbar__link" onClick={() => {history.push("/login")}}>New Post</Link>
                 }
+            </li>
+            <li className="navbar__item">
+                {/* {profile.user?.is_staff 
+                ? */}
+                <Link className="navbar__link" to="/users">User Manager</Link>
+                {/* :
+                ""
+                } */}
             </li>
             {
                 (localStorage.getItem("rare_user_id") !== null) ?
