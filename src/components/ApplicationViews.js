@@ -18,6 +18,10 @@ import { CommentList } from "./comments/CommentsList";
 import { ProfileProvider } from "./auth/AuthProvider"
 import { CommentForm } from "./comments/CommentForm";
 import { CommentEdit } from "./comments/CommentEdit";
+import { UserProvider } from "./user/UserProvider"
+import { UserList } from "./user/UserList"
+import { UserProfileProvider } from "./profile/UserProfileProvider";
+import { ProfileDetail } from "./profile/UserProfileDetail";
 
 
 export const ApplicationViews = () => {
@@ -100,6 +104,18 @@ export const ApplicationViews = () => {
             <TagsForm />
           </Route>
         </TagsProvider>
+
+        <UserProvider>
+          <UserProfileProvider>
+          <Route exact path="/users">
+            <UserList />
+          </Route>
+
+          <Route exact path="/profile/:userId(\d+)">
+            <ProfileDetail />
+          </Route>
+          </UserProfileProvider>
+        </UserProvider>
       </ProfileProvider>
     </>
   );
