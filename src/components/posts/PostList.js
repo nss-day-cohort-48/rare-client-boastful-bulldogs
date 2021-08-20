@@ -53,7 +53,7 @@ export const PostList = () => {
     return (
         <section>
             <h1 className="post-title">All Posts</h1>
-            { profile.user?.is_staff ? sortedPosts.map(post => {
+            { profile.user?.user.is_staff ? sortedPosts.map(post => {
                     return (
                         <>
                         <div className="post-list">
