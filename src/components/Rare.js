@@ -4,14 +4,17 @@ import { ApplicationViews } from "./ApplicationViews"
 import { NavBar } from "./nav/NavBar"
 import { Login } from "./auth/Login"
 import { Register } from "./auth/Register"
+import { ProfileProvider } from "./auth/AuthProvider"
 
 export const Rare = () => (
     <>
         <Route render={() => {
             // if (localStorage.getItem("rare_user_id")) {
                 return <>
+                    {/* <ProfileProvider> */}
                     <NavBar />
                     <ApplicationViews />
+                    {/* </ProfileProvider> */}
                 </>
             // } else {
             //     return <Redirect to="/login" />
