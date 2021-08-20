@@ -22,40 +22,40 @@ export const UserProvider = (props) => {
         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
     }).then((res) => res.json());
-    // .then(setTag);
+    // .then(setuserObj);
   };
 
-//   const addTag = (newTagObj) => {
-//     return fetch(`http://localhost:8000/User`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-//       },
-//       body: JSON.stringify(newTagObj),
-//     }).then(getAllUser);
-//   };
+  //   const adduserObj = (newuserObjObj) => {
+  //     return fetch(`http://localhost:8000/User`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+  //       },
+  //       body: JSON.stringify(newuserObjObj),
+  //     }).then(getAllUser);
+  //   };
 
-//   const deleteTag = (tagId) => {
-//     return fetch(`http://localhost:8000/User/${tagId}`, {
-//       method: "DELETE",
-//       headers: {
-//         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-//       },
-//     }).then(getAllUser);
-//   };
+  //   const deleteuserObj = (userObjId) => {
+  //     return fetch(`http://localhost:8000/User/${userObjId}`, {
+  //       method: "DELETE",
+  //       headers: {
+  //         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+  //       },
+  //     }).then(getAllUser);
+  //   };
 
-//   const editTag = (tag) => {
-//     return fetch(`http://localhost:8000/User/${tag.id}`, {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-//       },
-//       body: JSON.stringify(tag),
-//     });
-//     // .then(setTag(tag));
-//   };
+  const updateUser = (userObj) => {
+    return fetch(`http://localhost:8000/user/${userObj.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
+      },
+      body: JSON.stringify(userObj),
+    });
+    // .then(setuserObj(userObj));
+  };
 
   return (
     <UserContext.Provider
@@ -64,9 +64,10 @@ export const UserProvider = (props) => {
         users,
         getAllUsers,
         getUserById,
-        // addTag,
-        // deleteTag,
-        // editTag,
+        updateUser,
+        // adduserObj,
+        // deleteuserObj,
+        // edituserObj,
       }}
     >
       {props.children}
