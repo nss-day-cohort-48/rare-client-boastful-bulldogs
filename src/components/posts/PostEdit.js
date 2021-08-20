@@ -26,7 +26,7 @@ export const PostEdit = () => {
   const [post, setPost] = useState({
     id: parseInt(postId),
     user_id: parseInt(userId),
-    category: 0,
+    category_id: 0,
     title: "",
     publication_date: "",
     image_url: "",
@@ -48,7 +48,7 @@ export const PostEdit = () => {
       .then(post =>{
           setPost({
             id: post.id,
-            category: post.category.id,
+            category_id: post.category.id,
             title: post.title,
             publication_date: post.publication_date,
             image_url: post.image_url,
@@ -139,7 +139,8 @@ export const PostEdit = () => {
       <fieldset className="postInputField">
           <div className="form-group post-category-field">
             <InputLabel htmlFor="category">Category:</InputLabel>
-            <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" value={post.category} onChange={handleControlledCategoryChange}>
+            <Select name="category" required id="category" className="SearchForm-control SearchFormDropDown-control" 
+                    value={post.category_id} onChange={handleControlledCategoryChange}>
               <option value="">Select</option>
                 {categories.map(c => (
                 <MenuItem key={c.id} value={c.id}>
@@ -163,25 +164,25 @@ export const PostEdit = () => {
       </fieldset> */}
       <fieldset>
                 <div>
-                    {tags.map(p => (
+                    {tags.map(t => (
                         <>
-                        <input type="checkbox" key={p.id}
-                        value={p.id} onClick={event => {
+                        <input type="checkbox" key={t.id}
+                        value={t.id} onClick={event => {
                         const copyPostTags = [...postTags]
-                        const foundIndex = copyPostTags.findIndex(postTag => postTag.id === p.id)
+                        const foundIndex = copyPostTags.findIndex(postTag => postTag.id === t.id)
                         if (foundIndex >= 0) {
                             copyPostTags.splice(foundIndex, 1)
                         }
                         else {
-                            copyPostTags.push(p)
+                            copyPostTags.push(t)
                         }
                         setPostTags(copyPostTags)
                         }}
                         checked={
-                            postTags?.some((gameCategory) => {
-                                return gameCategory.id === p.id
+                            postTags?.some((tag) => {
+                                return tag.id === t.id
                             })
-                        }/>{p.label}</>))}
+                        }/>{t.label}</>))}
                 </div>
             </fieldset>
       <div className="postButton-flex">
