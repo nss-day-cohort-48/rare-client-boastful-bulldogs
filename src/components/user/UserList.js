@@ -19,9 +19,10 @@ export const UserList = () => {
     return a.full_name.localeCompare(b.label);
   });
 
-  const handleUserClick = (id) => {
-    getUserById(id).then(() => history.push(`/users/${id}`));
-  };
+  // const handleUserClick = (id) => {
+  //   getUserById(id)
+  //   .then(() => history.push(`/users/${id}`))
+  // }
 
   return (
     <>
@@ -34,9 +35,7 @@ export const UserList = () => {
               Name:{" "}
               <Link
                 className="title_link"
-                onClick={() => {
-                  handleUserClick(user.id);
-                }}
+                onClick={() => history.push(`/profile/${user.id}`)}
               >
                 {user.full_name}
               </Link>
