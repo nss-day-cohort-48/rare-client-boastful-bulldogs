@@ -39,7 +39,7 @@ export const CategoriesList = () => {
           <>
             <div>ID: {category.id}</div>
             <div>Label: {category.label}</div>
-            {profile.user?.is_staff ? (
+            {profile.user?.user.is_staff ? (
               <button
                 onClick={() => history.push(`/categories/edit/${category.id}`)}
               >
@@ -50,7 +50,7 @@ export const CategoriesList = () => {
             )}
             {/* <button>Edit Category</button> */}
             {/* <button onClick={() => handleDelete(category.id)}> */}
-            {profile.user?.is_staff ? (
+            {profile.user?.user.is_staff ? (
               <button onClick={() => handleDelete(category.id)}>
                 Delete category
               </button>

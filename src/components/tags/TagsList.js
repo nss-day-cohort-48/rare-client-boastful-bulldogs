@@ -34,7 +34,7 @@ export const TagsList = () => {
           <>
             <div>ID: {tag.id}</div>
             <div>Label: {tag.label}</div>
-            {profile.user?.is_staff ? (
+            {profile.user?.user.is_staff ? (
               <button onClick={() => history.push(`/tags/edit/${tag.id}`)}>
                 Edit Tag
               </button>
@@ -45,7 +45,7 @@ export const TagsList = () => {
               Edit Tag
             </button> */}
             {/* <button onClick={() => handleDelete(tag.id)}>Delete Tag</button> */}
-            {profile.user?.is_staff ? (
+            {profile.user?.user.is_staff ? (
               <button onClick={() => handleDelete(tag.id)}>Delete Tag</button>
             ) : (
               ""
