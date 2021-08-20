@@ -78,7 +78,9 @@ export const PostList = () => {
                                     label="approved"
                                 />
                                 {/* </fieldset> */}
+                                
                             </div>
+                            {/* delete button */}
                         </div>
                         </>
                     )

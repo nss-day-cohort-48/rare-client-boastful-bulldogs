@@ -6,7 +6,7 @@ import "./Post.css"
 
 
 export const MyPostList = () => {
-    const { posts, getAllPosts, getPostsByUserId, getPostById, deleteMyPost } = useContext(PostContext)
+    const { posts, getAllPosts, getPostsByUserId, getPostById, deletePost } = useContext(PostContext)
     // const userId = parseInt(localStorage.getItem("rare_user_id"))
 
     const history = useHistory()
@@ -34,7 +34,7 @@ export const MyPostList = () => {
         cancelButtonText: "Ah, cancel"
         }).then((result) => {
         if (result.isConfirmed) {
-            deleteMyPost(postId).then(() => {
+            deletePost(postId).then(() => {
             Swal.fire(
                 "Deleted!",
                 "Your post has been deleted.",
