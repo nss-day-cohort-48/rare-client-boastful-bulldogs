@@ -35,6 +35,7 @@ export const MyPost = () => {
               <div>Author: {postDetail.user?.first_name} {postDetail.user?.last_name}</div>
               <div>Date: {postDetail.publication_date}</div>
               <div>Category: {postDetail.category?.label}</div>
+              <div>Tags: {postDetail.tags?.map((t) => <li>{t.label}</li>)}</div>
             </div>
             <div>
             {userId === postDetail.user_id 

@@ -95,7 +95,6 @@ export const PostEdit = () => {
   const handleAdd = (e) => {
     setIsLoading(true)
     let newTags = []
-    debugger
     postTags.forEach(t => newTags.push(t.id))
     let newPost = {
         id: parseInt(postId,),
