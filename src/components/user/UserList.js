@@ -17,10 +17,10 @@ export const UserList = () => {
     return a.full_name.localeCompare(b.label);
   });
 
-  const handleUserClick = (id) => {
-    getUserById(id)
-    .then(() => history.push(`/users/${id}`))
-  }
+  // const handleUserClick = (id) => {
+  //   getUserById(id)
+  //   .then(() => history.push(`/users/${id}`))
+  // }
 
   return (
     <>
@@ -29,7 +29,7 @@ export const UserList = () => {
       {sortedUsers.map((user) => {
         return (
           <>
-            <div>Name: <Link className="title_link" onClick={() => {handleUserClick(user.id)}}>{user.full_name}</Link></div>
+            <div>Name: <Link className="title_link" onClick={() => history.push(`/profile/${user.id}`)}>{user.full_name}</Link></div>
             <div>Bio: {user.bio}</div>
             <div>Profile Image URL: {user.profile_image_url}</div>
             <div>Is Staff: {user.user?.is_staff.toString()}</div>
