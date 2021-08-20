@@ -70,7 +70,7 @@ export const MyPostList = () => {
                             </div>
                             <div>
                     <button onClick={() => 
-                    {handleDeleteModal(post.id)}} className="button is-rounded remove">Delete
+                    {handleDeleteModal(post.id)}} className="button is-rounded remove">
                     <img className="trashIconPic" src="https://img.icons8.com/material/24/000000/trash--v1.png"/></button>
                     
                         </div>
