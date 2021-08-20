@@ -24,8 +24,6 @@ export const UserList = () => {
 
   return (
     <>
-      { profile.user?.is_staff ? 
-      <>
       <h1>All Users</h1>
       <br></br>
       {sortedUsers.map((user) => {
@@ -36,8 +34,7 @@ export const UserList = () => {
             <div>Profile Image URL: {user.profile_image_url}</div>
             <div>Is Staff: {user.user?.is_staff.toString()}</div>
           </>
-        );
-      })} </> : ""}
-    </>
   );
+        })}
+        </>)
 };

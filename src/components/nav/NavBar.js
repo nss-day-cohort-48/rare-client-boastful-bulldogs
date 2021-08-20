@@ -57,12 +57,12 @@ export const NavBar = () => {
                 }
             </li>
             <li className="navbar__item">
-                {/* {profile.user?.is_staff 
-                ? */}
+                {userId
+                ?
                 <Link className="navbar__link" to="/users">User Manager</Link>
-                {/* :
-                ""
-                } */}
+                :
+                <Link className="navbar__link" onClick={() => {history.push("/login")}}>User Manager</Link>
+                }
             </li>
             {
                 (localStorage.getItem("rare_user_id") !== null) ?
